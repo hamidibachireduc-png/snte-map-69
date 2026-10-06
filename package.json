@@ -1,0 +1,41 @@
+{
+  "name": "algeria-69-wilayas",
+  "version": "2.0.0",
+  "description": "Complete dataset of Algeria's 69 wilayas and 1,541 communes with official numbering, including the 11 new wilayas established in November 2025",
+  "main": "main.json",
+  "files": [
+    "main.json",
+    "communes.json"
+  ],
+  "keywords": [
+    "algeria",
+    "wilayas",
+    "communes",
+    "dairas",
+    "municipalities",
+    "cities",
+    "provinces",
+    "geographic-data",
+    "coordinates",
+    "json",
+    "administrative-divisions",
+    "gis",
+    "mapping",
+    "location-data",
+    "algeria-data",
+    "arabic",
+    "north-africa",
+    "ecommerce",
+    "shipping"
+  ],
+  "author": "Mohamed-gp",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mohamed-gp/algeria_69_wilayas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Mohamed-gp/algeria_69_wilayas/issues"
+  },
+  "homepage": "https://mohamed-gp.github.io/algeria_69_wilayas/"
+}

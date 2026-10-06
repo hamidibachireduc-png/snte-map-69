@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البوابة التفاعلية للنقابة الوطنية لعمال التربية (SNTE)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
+        
+        .map-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
+        .map-container svg { width: 100%; height: auto; max-height: 550px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        
+        /* تنسيقات ذكية لتلوين الولايات */
+        .map-container svg path { fill: #e2e8f0; stroke: #ffffff; stroke-width: 0.8; cursor: pointer; transition: all 0.3s ease; }
+        .map-container svg path:hover { fill: #94a3b8; stroke-width: 1.5; }
+        .map-container svg path.active-wilaya { fill: #1d4ed8; stroke-width: 2; outline: none; }
+        
+        .tab-btn.active { border-bottom: 4px solid #16a34a; color: #166534; font-weight: 700; background-color: #f0fdf4;}
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-green-700 text-white shadow-md p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="bg-white rounded-full p-1 h-12 w-12 flex items-center justify-center text-green-700 font-bold text-xs text-center border-2 border-red-500 shadow-inner">SNTE</div>
+                <div>
+                    <h1 class="text-xl md:text-2xl font-bold">النقابة الوطنية لعمال التربية</h1>
+                    <p class="text-green-100 text-sm">البوابة التفاعلية للقيادات والهياكل النقابية - 69 ولاية</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container mx-auto p-4 mt-4 flex flex-col lg:flex-row gap-6">
+        
+        <!-- قسم الخريطة -->
+        <div class="w-full lg:w-1/2 bg-white p-4 rounded-xl shadow border border-gray-200 flex flex-col">
+            <h2 class="text-lg font-bold mb-4 text-center text-green-700 border-b pb-2">الخريطة التفاعلية</h2>
+            
+            <div class="map-container flex-grow mb-4 bg-blue-50/30 rounded-xl p-2 border border-gray-100 relative">
+                <!-- الكود سيقوم بجلب الخريطة من نفس المجلد -->
+                <div id="svg-wrapper" class="w-full h-full flex flex-col items-center justify-center text-center">
+                    <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
+                    <p class="text-blue-600 font-bold">جاري تحميل الخريطة...</p>
+                </div>
+            </div>
+
+            <!-- أدوات البحث السريع -->
+            <div class="grid grid-cols-2 gap-4 mt-auto">
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">الجهة:</label>
+                    <select id="region-select" class="w-full p-2 border border-gray-300 rounded focus:ring-green-500 text-sm">
+                        <option value="all">المكتب الوطني (الكل)</option>
+                        <option value="الشرق">الشرق</option>
+                        <option value="الغرب">الغرب</option>
+                        <option value="الوسط 01">الوسط 01</option>
+                        <option value="الوسط 02">الوسط 02</option>
+                        <option value="جنوب الوسط">جنوب الوسط</option>
+                        <option value="الجنوب الشرقي">الجنوب الشرقي</option>
+                        <option value="الجنوب الغربي">الجنوب الغربي</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-gray-700 mb-1">بحث برقم الولاية:</label>
+                    <input type="number" id="wilaya-search" placeholder="مثال: 16" class="w-full p-2 border border-gray-300 rounded focus:ring-green-500 text-sm">
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم عرض بيانات النقابة -->
+        <div class="w-full lg:w-1/2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
+            <div class="flex border-b bg-gray-50 shrink-0">
+                <button onclick="switchTab('national')" id="tab-national" class="tab-btn active flex-1 py-3 text-center font-semibold text-gray-600 transition">المكتب الوطني</button>
+                <button onclick="switchTab('regional')" id="tab-regional" class="tab-btn flex-1 py-3 text-center font-semibold text-gray-600 transition hidden">الأمانة الجهوية</button>
+                <button onclick="switchTab('wilaya')" id="tab-wilaya" class="tab-btn flex-1 py-3 text-center font-semibold text-gray-600 transition hidden">الأمانة الولائية</button>
+            </div>
+
+            <div class="p-6 overflow-y-auto flex-grow h-[600px]">
+                
+                <!-- الأمانة الوطنية -->
+                <div id="content-national" class="space-y-6">
+                    <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded mb-6 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-lg font-bold text-red-800">الأمين العام الوطني</h2>
+                            <p class="text-xl font-bold text-gray-900 mt-1">قويدر يحياوي</p>
+                            <p class="text-sm text-gray-600 mt-2" dir="ltr">0781450423 | 0557072815</p>
+                            <p class="text-sm text-gray-600">Kouidery@ymail.com</p>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-gray-700 border-b pb-2">أعضاء المكتب الوطني</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="national-members-grid"></div>
+                </div>
+
+                <!-- الأمانة الجهوية -->
+                <div id="content-regional" class="hidden space-y-6">
+                    <div class="bg-green-700 text-white p-4 rounded flex justify-between items-center shadow-sm">
+                        <h2 class="text-lg font-bold">جهة التنسيق: <span id="display-region-name" class="text-yellow-300"></span></h2>
+                    </div>
+                    <div class="bg-white border-2 border-green-500 rounded-xl p-4 shadow-sm">
+                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded mb-2 inline-block">المنسق الجهوي</span>
+                        <h3 class="text-xl font-bold text-gray-800" id="reg-coordinator-name"></h3>
+                        <p class="text-sm text-gray-500 mb-2" id="reg-coordinator-wilaya"></p>
+                        <p class="text-sm">📞 <span id="reg-coordinator-phone" dir="ltr"></span></p>
+                    </div>
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                        <h3 class="text-md font-bold text-gray-800 border-b pb-2 mb-3">أعضاء الأمانة الجهوية</h3>
+                        <ul id="reg-members-list" class="space-y-2"></ul>
+                    </div>
+                </div>
+
+                <!-- الأمانة الولائية -->
+                <div id="content-wilaya" class="hidden space-y-6">
+                    <div class="bg-blue-700 text-white p-4 rounded shadow-sm">
+                        <h2 class="text-xl font-bold text-center">بيانات الولاية رقم: <span id="display-wilaya-name" class="text-yellow-300 font-bold text-2xl"></span></h2>
+                    </div>
+
+                    <div id="wilaya-data-found" class="bg-white border-2 border-blue-200 rounded-xl p-6 shadow-sm">
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mb-3 inline-block">الأمين العام الولائي</span>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-6" id="wilaya-sec-name"></h3>
+                        
+                        <div class="space-y-4 text-gray-700">
+                            <div class="flex items-center p-3 bg-gray-50 rounded border border-gray-100">
+                                <span class="w-8 text-xl">📱</span>
+                                <div><span class="block text-xs text-gray-500">رقم الهاتف</span><span class="font-bold" id="wilaya-sec-phone" dir="ltr"></span></div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-50 rounded border border-gray-100">
+                                <span class="w-8 text-xl">📧</span>
+                                <div><span class="block text-xs text-gray-500">البريد الإلكتروني</span><span class="font-bold" id="wilaya-sec-email"></span></div>
+                            </div>
+                            <div class="flex items-center p-3 bg-gray-50 rounded border border-gray-100">
+                                <span class="w-8 text-xl">📍</span>
+                                <div><span class="block text-xs text-gray-500">المقر</span><span class="font-bold" id="wilaya-sec-address"></span></div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="document.getElementById('region-select').value = document.getElementById('wilaya-sec-region').dataset.region; document.getElementById('region-select').dispatchEvent(new Event('change'));" class="mt-6 w-full py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold rounded transition flex items-center justify-center gap-2">
+                            <span>الجهة التابعة لها:</span>
+                            <span id="wilaya-sec-region" class="text-blue-700"></span>
+                        </button>
+                    </div>
+
+                    <div id="wilaya-no-data" class="hidden bg-orange-50 border border-orange-200 p-6 rounded-xl text-center">
+                        <div class="text-4xl mb-3">⏳</div>
+                        <h3 class="font-bold text-orange-800 text-lg">البيانات غير متوفرة حالياً</h3>
+                        <p class="text-orange-600 mt-2">بيانات هذه الولاية قيد التحديث في قواعد بيانات النقابة.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // قواعد بيانات النقابة
+        const nationalMembers = [
+            { name: "احمد رحيمي", role: "التنظيم والتنسيق", phone: "0671276322" },
+            { name: "مولاي لخضرعبد الهادي", role: "الكتابة والعلاقات العامة", phone: "0540731562" },
+            { name: "حسان بن شعيب", role: "المالية والوسائل", phone: "0554906580" },
+            { name: "نبيل فرقنيس", role: "التربية والتكوين النقابي", phone: "0556005117" },
+            { name: "صفاح لحبيب", role: "الشؤون الاجتماعية", phone: "0697011078" },
+            { name: "حيرش جهيد", role: "الإعلام والاتصال", phone: "0557835791" },
+            { name: "بن علو توفيق", role: "المنازعات والشؤون القانونية", phone: "0663241117" },
+            { name: "بن قسمية سعاد", role: "التضامن وشؤون المرأة", phone: "0672362192" },
+            { name: "كرميش بايزيد", role: "النشاط الثقافي والرياضي", phone: "0656192113" },
+            { name: "تامي نورين لخضر", role: "علاقات العمل والاتفاقيات", phone: "0675998222" }
+        ];
+
+        const wilayasData = [
+            { id: "1", sec: "صوفي عبد الكريم", phone: "0671 72 96 31", email: "krimolv37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
+            { id: "2", sec: "كوري محمد", phone: "0771 54 84 77", email: "mohakouri2023@gmail.com", address: "قرب مركز توزيع والنشر الشلف", region: "الغرب" },
+            { id: "3", sec: "قتال مداني", phone: "0659 35 31 61", email: "sntelaghout03@gmail.com", address: "قرب ثانوية محمد الصادق", region: "جنوب الوسط" },
+            { id: "4", sec: "مزياني عماد", phone: "0772 51 80 87", email: "Mezainiimad@gmail.com", address: "-", region: "الشرق" },
+            { id: "5", sec: "خالد حجازي", phone: "0663 91 55 34", email: "sntebatna@gmail.com", address: "-", region: "الشرق" },
+            { id: "16", sec: "موقاري محمد أنيس", phone: "0559 57 86 29", email: "-", address: "سيدي امحند بالجزائر", region: "الوسط 01" },
+            { id: "17", sec: "بن ميلود محمد", phone: "0541 66 64 99", email: "-", address: "مقر الخدمات بقناني", region: "جنوب الوسط" },
+            { id: "30", sec: "منصوري يوسف", phone: "0660192478", email: "youcefmansouri00@gmail.com", address: "-", region: "الجنوب الشرقي" },
+            { id: "39", sec: "اوحمودة العيد", phone: "0770443016", email: "laid8219@gmail.com", address: "-", region: "الجنوب الشرقي" },
+            { id: "54", sec: "بن عبد الكريم عبد القادر", phone: "0668 04 39 08", email: "-", address: "-", region: "الجنوب الغربي" }
+        ];
+
+        const regionalData = {
+            "الشرق": { coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59" }, members: [{ name: "بوقطوف توفيق", wilaya: "تبسة" }, { name: "خالد حجازي", wilaya: "باتنة" }] },
+            "الغرب": { coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776 48 44 77" }, members: [{ name: "نجيب عيموش", wilaya: "غليزان" }] },
+            "الوسط 01": { coordinator: { name: "حجلاوي أحمد", wilaya: "عين الدفلى", phone: "0771 29 13 71" }, members: [{ name: "بوسالم احمد", wilaya: "الجزائر شرق" }, { name: "نعمان رابح", wilaya: "تيبازة" }] },
+            "الوسط 02": { coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80" }, members: [{ name: "عزيب عادل", wilaya: "برج بوعريريج" }] },
+            "جنوب الوسط": { coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17" }, members: [{ name: "اسامة مزاري", wilaya: "بوسعادة" }] },
+            "الجنوب الشرقي": { coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772 75 75 59" }, members: [{ name: "شيخي عامر", wilaya: "إليزي" }] },
+            "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86" }, members: [{ name: "حمة عبد القادر", wilaya: "أدرار" }] }
+        };
+
+        // تحميل الخريطة من ملف محلي (موجود في نفس المجلد)
+        document.addEventListener('DOMContentLoaded', () => {
+            renderNationalMembers();
+            
+            // نفترض أنك سميت ملف الخريطة map.svg ورفعته مع الكود
+            fetch('map.svg') 
+            .then(response => {
+                if (!response.ok) throw new Error("ملف الخريطة غير موجود");
+                return response.text();
+            })
+            .then(svgData => {
+                const wrapper = document.getElementById('svg-wrapper');
+                wrapper.innerHTML = svgData;
+                initSmartSVGMap(); // تفعيل الخريطة
+            }).catch(e => {
+                document.getElementById('svg-wrapper').innerHTML = `
+                <div class="text-red-500 font-bold p-4 text-center">
+                    <p class="mb-2">خطأ: لم يتم العثور على ملف الخريطة (map.svg).</p>
+                    <p class="text-sm">تأكد من أنك قمت برفع ملف map.svg إلى نفس المكان الموجود فيه هذا الكود على GitHub.</p>
+                </div>`;
+            });
+        });
+
+        // ربط الخريطة عند تحميلها
+        function initSmartSVGMap() {
+            const paths = document.querySelectorAll('.map-container svg path');
+            paths.forEach(path => {
+                let rawId = path.getAttribute('id') || path.getAttribute('data-wilaya') || path.getAttribute('name');
+                if(!rawId) return;
+
+                let wilayaNumber = rawId.replace(/\D/g, ''); 
+                if(wilayaNumber) {
+                    wilayaNumber = parseInt(wilayaNumber, 10).toString();
+                    path.setAttribute('data-w-id', wilayaNumber);
+
+                    // إضافة التفاعل عند النقر
+                    path.addEventListener('click', function() {
+                        paths.forEach(p => p.classList.remove('active-wilaya'));
+                        this.classList.add('active-wilaya');
+                        displayWilayaData(wilayaNumber);
+                    });
+                }
+            });
+        }
+
+        // باقي الدوال (كما هي في السابق) للتحكم بالعرض
+        function renderNationalMembers() {
+            const grid = document.getElementById('national-members-grid');
+            nationalMembers.forEach(m => {
+                grid.innerHTML += `
+                    <div class="border border-gray-100 rounded p-3 bg-white shadow-sm">
+                        <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded block mb-1 w-fit">${m.role}</span>
+                        <h4 class="font-bold text-gray-800 text-sm">${m.name}</h4>
+                        <p class="text-xs text-blue-600 mt-1" dir="ltr">${m.phone}</p>
+                    </div>`;
+            });
+        }
+
+        function switchTab(tabId) {
+            ['national', 'regional', 'wilaya'].forEach(t => {
+                document.getElementById(`content-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).classList.remove('active');
+            });
+            document.getElementById(`content-${tabId}`).classList.remove('hidden');
+            const tabBtn = document.getElementById(`tab-${tabId}`);
+            tabBtn.classList.remove('hidden');
+            tabBtn.classList.add('active');
+        }
+
+        document.getElementById('region-select').addEventListener('change', e => {
+            if (e.target.value === 'all') switchTab('national');
+            else displayRegionData(e.target.value);
+        });
+
+        document.getElementById('wilaya-search').addEventListener('input', e => {
+            const val = e.target.value;
+            if(val) {
+                const path = document.querySelector(`.map-container svg path[data-w-id="${val}"]`);
+                if(path) { path.click(); } else { displayWilayaData(val); }
+            }
+        });
+
+        function displayRegionData(regionName) {
+            const data = regionalData[regionName];
+            if(!data) return;
+            document.getElementById('display-region-name').textContent = regionName;
+            document.getElementById('reg-coordinator-name').textContent = data.coordinator.name;
+            document.getElementById('reg-coordinator-wilaya').textContent = `ولاية: ${data.coordinator.wilaya}`;
+            document.getElementById('reg-coordinator-phone').textContent = data.coordinator.phone;
+            
+            const list = document.getElementById('reg-members-list');
+            list.innerHTML = '';
+            data.members.forEach(m => {
+                list.innerHTML += `<li class="flex justify-between items-center p-2 border-b"><span class="font-bold">${m.name}</span><span class="text-xs bg-gray-100 px-2 py-1 rounded">${m.wilaya}</span></li>`;
+            });
+            switchTab('regional');
+        }
+
+        function displayWilayaData(wilayaId) {
+            document.getElementById('display-wilaya-name').textContent = wilayaId;
+            const w = wilayasData.find(w => w.id === wilayaId);
+            
+            if(w) {
+                document.getElementById('wilaya-data-found').classList.remove('hidden');
+                document.getElementById('wilaya-no-data').classList.add('hidden');
+                
+                document.getElementById('wilaya-sec-name').textContent = w.sec;
+                document.getElementById('wilaya-sec-phone').textContent = w.phone;
+                document.getElementById('wilaya-sec-email').textContent = w.email || '-';
+                document.getElementById('wilaya-sec-address').textContent = w.address || '-';
+                document.getElementById('wilaya-sec-region').textContent = w.region;
+                document.getElementById('wilaya-sec-region').dataset.region = w.region;
+            } else {
+                document.getElementById('wilaya-data-found').classList.add('hidden');
+                document.getElementById('wilaya-no-data').classList.remove('hidden');
+            }
+            
+            document.getElementById('tab-wilaya').classList.remove('hidden');
+            switchTab('wilaya');
+        }
+    </script>
+</body>
+</html>
