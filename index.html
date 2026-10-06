@@ -28,7 +28,7 @@
         .contact-link { transition: all 0.2s; }
         .contact-link:hover { opacity: 0.8; transform: scale(1.02); }
         
-        /* شريط تمرير أنيق للبلديات */
+        /* شريط تمرير أنيق */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -37,7 +37,7 @@
 </head>
 <body class="text-gray-800">
 
-    <!-- الرأس (متجاوب مع الجوال) -->
+    <!-- الرأس -->
     <header class="bg-green-700 text-white shadow-md p-3 md:p-4 sticky top-0 z-50">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-3 w-full justify-center md:justify-start">
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <!-- قسم عرض بيانات النقابة -->
+        <!-- قسم عرض البيانات -->
         <div class="w-full lg:w-1/2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
             <div class="flex border-b bg-gray-50 shrink-0">
                 <button onclick="switchTab('national')" id="tab-national" class="tab-btn active flex-1 py-2 md:py-3 text-xs md:text-sm text-center font-semibold text-gray-600 transition">المكتب الوطني</button>
@@ -113,20 +113,37 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3" id="national-members-grid"></div>
                 </div>
 
-                <!-- الأمانة الجهوية -->
+                <!-- الأمانة الجهوية (المحدثة بكافة البيانات) -->
                 <div id="content-regional" class="hidden space-y-4 md:space-y-6">
                     <div class="bg-green-700 text-white p-3 md:p-4 rounded flex justify-between items-center shadow-sm">
                         <h2 class="text-base md:text-lg font-bold">جهة التنسيق: <span id="display-region-name" class="text-yellow-300"></span></h2>
                     </div>
-                    <div class="bg-white border-2 border-green-500 rounded-xl p-3 md:p-4 shadow-sm">
-                        <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded mb-2 inline-block">المنسق الجهوي</span>
-                        <h3 class="text-lg md:text-xl font-bold text-gray-800" id="reg-coordinator-name"></h3>
-                        <p class="text-xs md:text-sm text-gray-500 mb-2" id="reg-coordinator-wilaya"></p>
-                        <p class="text-xs md:text-sm">📞 <a href="#" id="reg-coordinator-phone" dir="ltr" class="text-blue-600 hover:underline"></a></p>
+                    
+                    <!-- المنسق الجهوي -->
+                    <div class="bg-white border-2 border-green-500 rounded-xl p-4 md:p-5 shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded inline-block">المنسق الجهوي</span>
+                            <span class="text-xs md:text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded font-bold" id="reg-coordinator-wilaya"></span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4" id="reg-coordinator-name"></h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 text-center text-lg">📱</span>
+                                <div id="reg-coordinator-phone-container" class="flex-grow"></div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 text-center text-lg">📧</span>
+                                <div id="reg-coordinator-email-container" class="flex-grow"></div>
+                            </div>
+                        </div>
                     </div>
+                    
+                    <!-- أعضاء الأمانة الجهوية -->
                     <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 md:p-4">
                         <h3 class="text-sm md:text-md font-bold text-gray-800 border-b pb-2 mb-3">أعضاء الأمانة الجهوية</h3>
-                        <ul id="reg-members-list" class="space-y-2"></ul>
+                        <div id="reg-members-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <!-- سيتم ملؤه بالبطاقات برمجياً -->
+                        </div>
                     </div>
                 </div>
 
@@ -141,7 +158,6 @@
                         <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4" id="wilaya-sec-name"></h3>
                         
                         <div class="space-y-3 md:space-y-4 text-gray-700">
-                            <!-- رقم الهاتف والواتساب -->
                             <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
                                 <span class="w-8 text-lg md:text-xl">📱</span>
                                 <div class="flex-grow overflow-hidden">
@@ -150,7 +166,6 @@
                                 </div>
                             </div>
                             
-                            <!-- البريد الإلكتروني -->
                             <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
                                 <span class="w-8 text-lg md:text-xl">📧</span>
                                 <div class="flex-grow overflow-hidden">
@@ -159,14 +174,13 @@
                                 </div>
                             </div>
                             
-                            <!-- المقر -->
                             <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
                                 <span class="w-8 text-lg md:text-xl">📍</span>
                                 <div><span class="block text-[10px] md:text-xs text-gray-500">المقر</span><span class="font-bold text-xs md:text-sm" id="wilaya-sec-address"></span></div>
                             </div>
                         </div>
                         
-                        <!-- عرض البلديات والدوائر التابعة للولاية -->
+                        <!-- عرض البلديات -->
                         <div id="wilaya-communes-container" class="mt-4"></div>
                         
                         <button onclick="document.getElementById('region-select').value = document.getElementById('wilaya-sec-region').dataset.region; document.getElementById('region-select').dispatchEvent(new Event('change'));" class="mt-4 w-full py-2 md:py-3 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-800 font-bold text-sm md:text-base rounded transition flex items-center justify-center gap-2">
@@ -179,7 +193,6 @@
                         <div class="text-3xl md:text-4xl mb-2">⏳</div>
                         <h3 class="font-bold text-orange-800 text-base md:text-lg">البيانات غير متوفرة حالياً</h3>
                         <p class="text-orange-600 text-xs md:text-sm mt-2">بيانات هذه الولاية قيد التحديث في قواعد بيانات النقابة.</p>
-                        <!-- حتى إن لم تتوفر قيادة نقابية، نعرض بلديات الولاية -->
                         <div id="wilaya-communes-container-nodata" class="mt-4 text-right"></div>
                     </div>
                 </div>
@@ -189,7 +202,7 @@
     </div>
 
     <script>
-        // 1. قواعد بيانات النقابة
+        // 1. قواعد بيانات النقابة الوطنية
         const nationalMembers = [
             { name: "احمد رحيمي", role: "التنظيم والتنسيق", phone: "0671276322 - 0550549927" },
             { name: "مولاي لخضرعبد الهادي", role: "الكتابة والعلاقات العامة", phone: "0540731562" },
@@ -203,6 +216,7 @@
             { name: "تامي نورين لخضر", role: "علاقات العمل والاتفاقيات", phone: "0675998222 - 0541990943" }
         ];
 
+        // 2. قواعد بيانات الأمانات الولائية
         const wilayasData = [
             { id: "1", name: "ادرار", sec: "صوفي عبد الكريم", phone: "0671 72 96 31", email: "krimolv37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "2", name: "الشلف", sec: "كوري محمد", phone: "0771 54 84 77", email: "mohakouri2023@gmail.com", address: "قرب مركز توزيع و النشر البيداغوجي الشلف", region: "الغرب" },
@@ -210,7 +224,7 @@
             { id: "4", name: "ام البواقي", sec: "مزياني عماد", phone: "0772 51 80 87", email: "Mezainiimad@gmail.com", address: "غير متوفر", region: "الشرق" },
             { id: "5", name: "باتنة", sec: "خالد حجازي", phone: "0663 91 55 34", email: "sntebatna@gmail.com", address: "قرب متوسطة الاخوة شطوح", region: "الشرق" },
             { id: "6", name: "بجاية", sec: "نبيل فرقنيس", phone: "0556 00 51 17", email: "ferguenisnabil125@yahoo.ca", address: "قرب متوسطة ڨوماز احدادن", region: "الوسط 02" },
-            { id: "7", name: "بسكرة", sec: "لهلالي سمير", phone: "0772967667", email: "zrougmoussa63@gmail.com", address: "قرب ابتدائية بهاز لخضر بسكرة", region: "الجنوب الشرقي" },
+            { id: "7", name: "بسكرة", sec: "لهلالي سمير", phone: "0772967667 - 0778552850", email: "zrougmoussa63@gmail.com", address: "قرب ابتدائية بهاز لخضر بسكرة", region: "الجنوب الشرقي" },
             { id: "8", name: "بشار", sec: "حجاج محمد", phone: "0664 10 62 87", email: "", address: "قرب مديرية التربية لولاية بشار", region: "الجنوب الغربي" },
             { id: "9", name: "البليدة", sec: "مسعودي نور الدين", phone: "0560304112", email: "messaoudinoureddine02@gmail.com", address: "قرب ابتدائية العربي التبسي البليدة", region: "الوسط 02" },
             { id: "10", name: "البويرة", sec: "قاسيمي سفيان", phone: "0770 25 77 00", email: "", address: "قرب مديرية التربية لولاية البويرة", region: "الوسط 02" },
@@ -233,7 +247,7 @@
             { id: "27", name: "مستغانم", sec: "محمود بلجيلالي", phone: "0671 28 50 30", email: "", address: "غير متوفر", region: "الغرب" },
             { id: "28", name: "المسيلة", sec: "نقاز طارق", phone: "0671 62 19 35", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "29", name: "معسكر", sec: "داود بن ويس", phone: "0770 19 05 28", email: "", address: "غير متوفر", region: "الغرب" },
-            { id: "30", name: "ورقلة", sec: "منصوري يوسف", phone: "0660192478", email: "youcefmansouri00@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "30", name: "ورقلة", sec: "منصوري يوسف", phone: "0660192478 - 0660925229", email: "youcefmansouri00@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "31", name: "وهران", sec: "بن عبد المؤمن كمال", phone: "0799 01 00 79", email: "ben.baraa31@gmail.com", address: "غير متوفر", region: "الغرب" },
             { id: "32", name: "البيض", sec: "سعيد مليكة", phone: "0770 79 13 97", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "33", name: "اليزي", sec: "بلحاج عبد الوهاب", phone: "0699 00 39 70", email: "wahabbelhadj32@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
@@ -242,16 +256,16 @@
             { id: "36", name: "الطارف", sec: "دريد خديجة", phone: "0660 18 44 84", email: "", address: "غير متوفر", region: "الشرق" },
             { id: "37", name: "تيندوف", sec: "بن شكشك مبروكة", phone: "0663 36 10 28", email: "tindoufsnte37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "38", name: "تيسمسيلت", sec: "فرحات عبد القادر", phone: "0670 61 38 66", email: "", address: "غير متوفر", region: "الغرب" },
-            { id: "39", name: "الوادي", sec: "اوحمودة العيد", phone: "0770443016", email: "laid8219@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "39", name: "الوادي", sec: "اوحمودة العيد", phone: "0770443016 - 0564083296", email: "laid8219@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "40", name: "خنشلة", sec: "بوعمراطة عادل", phone: "0671 67 21 98", email: "", address: "غير متوفر", region: "الشرق" },
-            { id: "41", name: "سوق اهراس", sec: "خضراوي منصف", phone: "0775586559", email: "", address: "غير متوفر", region: "الشرق" },
+            { id: "41", name: "سوق اهراس", sec: "خضراوي منصف", phone: "0775586559 - 0698316848", email: "", address: "غير متوفر", region: "الشرق" },
             { id: "42", name: "تيبازة", sec: "براني جمال", phone: "0664 47 10 10", email: "berranidjamel2311@gmail.com", address: "غير متوفر", region: "الوسط 01" },
             { id: "43", name: "ميلة", sec: "حد مسعود لمين", phone: "0796 02 17 04", email: "", address: "غير متوفر", region: "الشرق" },
             { id: "44", name: "عين الدفلى", sec: "نجماوي امحمد", phone: "0777 86 23 80", email: "mhamedne2@gmail.com", address: "غير متوفر", region: "الوسط 01" },
-            { id: "45", name: "النعامة", sec: "بدري عبد الحميد", phone: "0791734223", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "45", name: "النعامة", sec: "بدري عبد الحميد", phone: "0791734223 - 0663522943", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "46", name: "عين تيموشنت", sec: "بلعرج عماد", phone: "0550 06 38 46", email: "", address: "غير متوفر", region: "الغرب" },
-            { id: "47", name: "غارداية", sec: "مصيطفى محمد", phone: "0663054359", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "48", name: "غيليزان", sec: "بن مغنية عبد الله", phone: "0658039095", email: "abdallah0720195@gmail.com", address: "غير متوفر", region: "الغرب" },
+            { id: "47", name: "غارداية", sec: "مصيطفى محمد", phone: "0663054359 - 0658461438", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "48", name: "غيليزان", sec: "بن مغنية عبد الله", phone: "0658039095 - 0775041413", email: "abdallah0720195@gmail.com", address: "غير متوفر", region: "الغرب" },
             { id: "49", name: "تيميمون", sec: "عبد الحي رمضان", phone: "0663 11 29 87", email: "Ramadhan063@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "50", name: "برج باجي مختار", sec: "مباركي عبد المجيد", phone: "0675 57 01 25", email: "", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "51", name: "بني عباس", sec: "مرزوقي بوفلجة", phone: "0656 28 93 37", email: "meboufeldja@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
@@ -260,17 +274,62 @@
             { id: "54", name: "عين قزام", sec: "بن عبد الكريم عبد القادر", phone: "0668 04 39 08", email: "kaadeer90@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" }
         ];
 
+        // 3. قواعد بيانات التنسيق الجهوي (مُحدثة بالهواتف والإيميلات)
         const regionalData = {
-            "الشرق": { coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59" }, members: [{ name: "بوقطوف توفيق", wilaya: "تبسة" }, { name: "خالد حجازي", wilaya: "باتنة" }] },
-            "الغرب": { coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776484477" }, members: [{ name: "نجيب عيموش", wilaya: "غليزان" }, { name: "خليفي شريف عبد الهادي", wilaya: "تلمسان" }] },
-            "الوسط 01": { coordinator: { name: "حجلاوي أحمد", wilaya: "عين الدفلى", phone: "0771 29 13 71" }, members: [{ name: "بوسالم احمد", wilaya: "الجزائر شرق" }, { name: "نعمان رابح", wilaya: "تيبازة" }] },
-            "الوسط 02": { coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80" }, members: [{ name: "عبد الرحيم سعيد", wilaya: "الجزائر شرق" }, { name: "عزيب عادل", wilaya: "برج بوعريريج" }] },
-            "جنوب الوسط": { coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17" }, members: [{ name: "بن عبد الرحمان عبد الرزاق", wilaya: "غرداية" }, { name: "اسامة مزاري", wilaya: "بوسعادة" }] },
-            "الجنوب الشرقي": { coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772 75 75 59" }, members: [{ name: "شيخي عامر", wilaya: "إليزي" }, { name: "زيدي ليندة", wilaya: "بسكرة" }] },
-            "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86" }, members: [{ name: "باعيسى محمد", wilaya: "تمنراست" }, { name: "حمة عبد القادر", wilaya: "أدرار" }, { name: "محجوبي خليفة", wilaya: "بشار" }, { name: "يعيش عبد المومن", wilaya: "بني عباس" }] }
+            "الشرق": { 
+                coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59", email: "abderrahmanedjafri@yahoo.fr" }, 
+                members: [
+                    { name: "بوقطوف توفيق", wilaya: "تبسة", phone: "0697 79 75 28", email: "sntetoufik12@gmail.com" }, 
+                    { name: "خالد حجازي", wilaya: "باتنة", phone: "0663 91 55 34", email: "sntebatna@gmail.com" }
+                ] 
+            },
+            "الغرب": { 
+                coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776484477", email: "sntemosta@gmail.com" }, 
+                members: [
+                    { name: "نجيب عيموش", wilaya: "غليزان", phone: "0550341143", email: "sntenadjib48@gmail.com" }, 
+                    { name: "خليفي شريف عبد الهادي", wilaya: "تلمسان", phone: "0697119072- 0770292740", email: "khelifiabdelhadi13@gmail.com" }
+                ] 
+            },
+            "الوسط 01": { 
+                coordinator: { name: "حجلاوي أحمد", wilaya: "عين الدفلى", phone: "0771 29 13 71", email: "hadjlaouiahmed@gmail.com" }, 
+                members: [
+                    { name: "بوسالم احمد", wilaya: "الجزائر شرق", phone: "0556 14 50 73", email: "demed86@gmail.com" }, 
+                    { name: "نعمان رابح", wilaya: "تيبازة", phone: "0659502817- 0665253410", email: "ens.namane@gmail.com" }
+                ] 
+            },
+            "الوسط 02": { 
+                coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80 - 0662 58 25 95", email: "hacene.Benchaib@gmail.com" }, 
+                members: [
+                    { name: "عبد الرحيم سعيد", wilaya: "الجزائر شرق", phone: "0556 85 09 30", email: "saidsnte@gmail.com" }, 
+                    { name: "عزيب عادل", wilaya: "برج بوعريريج", phone: "0778 27 92 90", email: "azibadel9@gmail.com" }
+                ] 
+            },
+            "جنوب الوسط": { 
+                coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17", email: "ahmed17goz@gmail.com" }, 
+                members: [
+                    { name: "بن عبد الرحمان عبد الرزاق", wilaya: "غرداية", phone: "0556 85 09 30", email: "abderrazakgeneral@gmail.com" }, 
+                    { name: "اسامة مزاري", wilaya: "بوسعادة", phone: "0671 39 13 76", email: "oussama77.m@gmail.com" }
+                ] 
+            },
+            "الجنوب الشرقي": { 
+                coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772757559 - 0662582595", email: "ademtoursdz@gmail.com" }, 
+                members: [
+                    { name: "شيخي عامر", wilaya: "إليزي", phone: "0660 39 61 67", email: "chikhiamer@gmail.com" }, 
+                    { name: "زيدي ليندة", wilaya: "بسكرة", phone: "0658 24 09 95", email: "" }
+                ] 
+            },
+            "الجنوب الغربي": { 
+                coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86", email: "benyahiamustapha49@gmail.com" }, 
+                members: [
+                    { name: "باعيسى محمد", wilaya: "تمنراست", phone: "0671 64 41 49", email: "" }, 
+                    { name: "حمة عبد القادر", wilaya: "أدرار", phone: "0660 12 35 86", email: "" }, 
+                    { name: "محجوبي خليفة", wilaya: "بشار", phone: "0663 79 63 69", email: "" }, 
+                    { name: "يعيش عبد المومن", wilaya: "بني عباس", phone: "0655 18 47 89", email: "" }
+                ] 
+            }
         };
 
-        // 2. تحميل البلديات
+        // متغير البلديات
         let communesData = [];
         
         // دوال مساعدة للروابط
@@ -306,17 +365,15 @@
             return `<a href="mailto:${email.trim()}" class="contact-link text-blue-600 hover:underline bg-blue-50 px-2 py-1 rounded inline-block text-xs md:text-sm truncate w-full" title="${email.trim()}">${email.trim()}</a>`;
         }
 
-        // 3. التحميل الأولي للملفات
+        // التحميل الأولي للملفات
         document.addEventListener('DOMContentLoaded', () => {
             renderNationalMembers();
             
-            // جلب ملف البلديات
             fetch('communes.json')
                 .then(res => res.json())
                 .then(data => { communesData = data.communes; })
                 .catch(err => console.error("Error loading communes:", err));
 
-            // جلب ملف الخريطة
             fetch('map.svg')
                 .then(response => {
                     if (!response.ok) throw new Error("File not found");
@@ -392,22 +449,32 @@
             }
         });
 
+        // دالة عرض بيانات الأمانة الجهوية مع التعديل الجديد للأعضاء
         function displayRegionData(regionName) {
             const data = regionalData[regionName];
             if(!data) return;
             document.getElementById('display-region-name').textContent = regionName;
+            
+            // بيانات المنسق الجهوي
             document.getElementById('reg-coordinator-name').textContent = data.coordinator.name;
             document.getElementById('reg-coordinator-wilaya').textContent = `ولاية: ${data.coordinator.wilaya}`;
+            document.getElementById('reg-coordinator-phone-container').innerHTML = generatePhoneLinks(data.coordinator.phone);
+            document.getElementById('reg-coordinator-email-container').innerHTML = generateEmailLink(data.coordinator.email);
             
-            const cleanRegPhone = cleanPhoneForLink(data.coordinator.phone);
-            const regPhoneEl = document.getElementById('reg-coordinator-phone');
-            regPhoneEl.textContent = data.coordinator.phone;
-            regPhoneEl.href = `tel:${cleanRegPhone}`;
-            
-            const list = document.getElementById('reg-members-list');
-            list.innerHTML = '';
+            // بيانات أعضاء الأمانة الجهوية (شكل بطاقات مع الهواتف والإيميلات)
+            const membersGrid = document.getElementById('reg-members-grid');
+            membersGrid.innerHTML = '';
             data.members.forEach(m => {
-                list.innerHTML += `<li class="flex justify-between items-center p-2 border-b text-xs md:text-sm"><span class="font-bold">${m.name}</span><span class="bg-gray-100 px-2 py-1 rounded">${m.wilaya}</span></li>`;
+                membersGrid.innerHTML += `
+                    <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm flex flex-col gap-2">
+                        <div class="flex justify-between items-start">
+                            <span class="font-bold text-gray-800 text-sm md:text-base">${m.name}</span>
+                            <span class="text-xs bg-green-50 text-green-700 border border-green-200 px-2 py-1 rounded-full">${m.wilaya}</span>
+                        </div>
+                        <div class="mt-1">${generatePhoneLinks(m.phone)}</div>
+                        ${m.email ? `<div class="mt-1">${generateEmailLink(m.email)}</div>` : ''}
+                    </div>
+                `;
             });
             switchTab('regional');
         }
@@ -455,18 +522,15 @@
                 document.getElementById('wilaya-sec-region').textContent = w.region;
                 document.getElementById('wilaya-sec-region').dataset.region = w.region;
                 
-                // عرض البلديات للولاية المتوفرة
                 renderCommunes(wilayaId, 'wilaya-communes-container');
                 
             } else {
                 document.getElementById('wilaya-data-found').classList.add('hidden');
                 document.getElementById('wilaya-no-data').classList.remove('hidden');
                 
-                // عرض البلديات حتى لو كانت قيادة النقابة غير متوفرة بعد
                 renderCommunes(wilayaId, 'wilaya-communes-container-nodata');
             }
             
-            // تحديث اسم الولاية المعروض ليحتوي على اسم الولاية بجانب الرقم
             if(w && w.name) {
                 document.getElementById('display-wilaya-name').textContent = `${w.name} (${wilayaId})`;
             }
