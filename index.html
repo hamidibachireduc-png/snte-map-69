@@ -220,7 +220,7 @@
     </div>
 
     <script>
-        // 1. بيانات النقابة
+        // بيانات النقابة من الملف المحدث بالترقيم الرسمي
         const nationalMembers = [
             { name: "احمد رحيمي", role: "التنظيم والتنسيق", phone: "0671276322 - 0550549927" },
             { name: "مولاي لخضرعبد الهادي", role: "الكتابة والعلاقات العامة", phone: "0540731562" },
@@ -251,7 +251,7 @@
             { name: "محجوبي عبد الله", wilaya: "عين الدفلى", phone: "", email: "" }
         ];
 
-        // تم استكمال كافة البيانات وتصحيحها بناءً على الترقيم الرسمي
+        // القائمة المستخرجة من الإكسيل المصحح بالترقيم الرسمي
         const wilayasData = [
             { id: "1", name: "أدرار", sec: "صوفي عبد الكريم", phone: "0671 72 96 31", email: "krimolv37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "2", name: "الشلف", sec: "كوري محمد", phone: "0771 54 84 77", email: "mohakouri2023@gmail.com", address: "قرب مركز توزيع و النشر البيداغوجي الشلف", region: "الغرب" },
@@ -268,15 +268,15 @@
             { id: "13", name: "تلمسان", sec: "بن خدة عبد القادر", phone: "0668 58 08 65", email: "iyed0205fethi@gmail.com", address: "قرب مدرسة باستور لبنين بتلمسان", region: "الغرب" },
             { id: "14", name: "تيارت", sec: "ميلود صمار", phone: "0666 95 50 19", email: "miloud semmar090@gmail.com", address: "قرب مقر الخدمات الاجتماعية بتيارت", region: "الغرب" },
             { id: "15", name: "تيزي وزو", sec: "صامت مصطفى", phone: "0540 98 20 18", email: "sametmostapha@gmail.com", address: "قرب ثانوية فاطمة نسومر بتيزي وزو", region: "الوسط 02" },
-            { id: "16", name: "الجزائر", sec: "موقاري محمد أنيس", phone: "0559 57 86 29", email: "", address: "قرب مدرسة محمد مادة بسيدي امحند", region: "الوسط 01" },
-            { id: "17", name: "الجلفة", sec: "بن ميلود محمد", phone: "0541 66 64 99", email: "", address: "قرب مقر الخدمات الاجتماعية بقناني", region: "جنوب الوسط" },
+            { id: "16", name: "الجزائر", sec: "موقاري محمد أنيس", phone: "0559 57 86 29", email: "mohamedanismougari@gmail.com", address: "قرب مدرسة محمد مادة بسيدي امحند", region: "الوسط 01" },
+            { id: "17", name: "الجلفة", sec: "بن ميلود محمد", phone: "0541 66 64 99", email: "lounadjib@gmail.com", address: "قرب مقر الخدمات الاجتماعية بقناني", region: "جنوب الوسط" },
             { id: "18", name: "جيجل", sec: "فرحات عبد النور", phone: "0778859850", email: "abdenourferhat58@gmail.com", address: "مقر المفتشيات حي مصطفى طريق الصومام", region: "الشرق" },
             { id: "19", name: "سطيف", sec: "عثماني هشام", phone: "0794 94 80 01", email: "kaadeer90@gmail.com", address: "غير متوفر", region: "الشرق" },
-            { id: "20", name: "سعيدة", sec: "بوسماحة فطيمة", phone: "0775 28 13 42", email: "", address: "مقابل ثانوية سحنون الراشدي", region: "الغرب" },
+            { id: "20", name: "سعيدة", sec: "بوسماحة فطيمة", phone: "0775 28 13 42", email: "fbousmaha50@gmail.com", address: "مقابل ثانوية سحنون الراشدي", region: "الغرب" },
             { id: "21", name: "سكيكدة", sec: "بوجغرة زهير", phone: "0665 11 00 15", email: "zouhirboudjoghra91@gmail.com", address: "مصلحة التكوين والتفتيش مرج الذيب", region: "الشرق" },
             { id: "22", name: "سيدي بلعباس", sec: "دبار أمين طارق", phone: "0552 06 78 93", email: "mrdebbar@gmail.com", address: "بالقرب من متوسطة مالك حداد", region: "الغرب" },
             { id: "23", name: "عنابة", sec: "شعابنة مبروك", phone: "0775 21 51 98", email: "", address: "متوسطة جورج إسحاق", region: "الشرق" },
-            { id: "24", name: "قالمة", sec: "شحاط اسماعيل", phone: "0662 92 86 69", email: "", address: "غير متوفر", region: "الشرق" },
+            { id: "24", name: "قالمة", sec: "شحاط اسماعيل", phone: "0662 92 86 69", email: "snte24guelma@gmail.com", address: "غير متوفر", region: "الشرق" },
             { id: "25", name: "قسنطينة", sec: "شبيرة خالد", phone: "0797 01 16 17", email: "Khaled.snte@gmail.com", address: "غير متوفر", region: "الشرق" },
             { id: "26", name: "المدية", sec: "ولد يحي بن الشارف", phone: "0660 65 30 54", email: "", address: "غير متوفر", region: "الوسط 01" },
             { id: "27", name: "مستغانم", sec: "محمود بلجيلالي", phone: "0671 28 50 30", email: "", address: "غير متوفر", region: "الغرب" },
@@ -298,17 +298,15 @@
             { id: "43", name: "ميلة", sec: "حد مسعود لمين", phone: "0796 02 17 04", email: "", address: "غير متوفر", region: "الشرق" },
             { id: "44", name: "عين الدفلى", sec: "نجماوي امحمد", phone: "0777 86 23 80", email: "mhamedne2@gmail.com", address: "غير متوفر", region: "الوسط 01" },
             { id: "45", name: "النعامة", sec: "بدري عبد الحميد", phone: "0791734223 - 0663522943", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "46", name: "عين تيموشنت", sec: "بلعرج عماد", phone: "0550 06 38 46", email: "", address: "غير متوفر", region: "الغرب" },
+            { id: "46", name: "عين تيموشنت", sec: "بلعرج عماد", phone: "550063846 - 0777158525", email: "belaredjimeddine@gmail.com", address: "غير متوفر", region: "الغرب" },
             { id: "47", name: "غرداية", sec: "مصيطفى محمد", phone: "0663054359 - 0658461438", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "48", name: "غليزان", sec: "بن مغنية عبد الله", phone: "0658039095 - 0775041413", email: "abdallah0720195@gmail.com", address: "غير متوفر", region: "الغرب" },
             { id: "49", name: "تيميمون", sec: "عبد الحي رمضان", phone: "0663 11 29 87", email: "Ramadhan063@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "50", name: "برج باجي مختار", sec: "مباركي عبد المجيد", phone: "0675 57 01 25", email: "", address: "غير متوفر", region: "الجنوب الغربي" },
-            { id: "51", name: "بني عباس", sec: "مرزوقي بوفلجة", phone: "0656 28 93 37", email: "meboufeldja@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
-            { id: "52", name: "أولاد جلال", sec: "بزيو ياسين", phone: "0660 45 03 15", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "51", name: "أولاد جلال", sec: "بزيو ياسين", phone: "0660 45 03 15", email: "yassine.bezziou1983@gmail.com", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "52", name: "بني عباس", sec: "مرزوقي بوفلجة", phone: "0656 28 93 37", email: "meboufeldja@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "53", name: "عين صالح", sec: "عبد النبي إبراهيم", phone: "0663 52 51 94", email: "bambiibrahim830@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "54", name: "عين قزام", sec: "بن عبد الكريم عبد القادر", phone: "0668 04 39 08", email: "kaadeer90@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
-            
-            // الولايات المستحدثة - مطابقة للترقيم الرسمي الموضح في الخريطة ومع أحدث البيانات
             { id: "55", name: "تقرت", sec: "قماري رشيد", phone: "0660 44 43 52", email: "rachidahmedyacine1981@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "56", name: "جانت", sec: "قاسمي محمد الأمين", phone: "0671 11 69 12", email: "msr.gasmi@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "57", name: "المغير", sec: "شهرة موسى", phone: "0780335552 - 0770616688", email: "chohra.moussa@gmail.com", address: "غير متوفر", region: "الجنوب الشرقي" },
