@@ -41,7 +41,7 @@
             <h2 class="text-lg font-bold mb-4 text-center text-green-700 border-b pb-2">الخريطة التفاعلية</h2>
             
             <div class="map-container flex-grow mb-4 bg-blue-50/30 rounded-xl p-2 border border-gray-100 relative">
-                <!-- الكود سيقوم بجلب الخريطة من نفس المجلد -->
+                <!-- الكود سيقوم بجلب الخريطة من الموقع الاصلي -->
                 <div id="svg-wrapper" class="w-full h-full flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
                     <p class="text-blue-600 font-bold">جاري تحميل الخريطة...</p>
@@ -191,26 +191,27 @@
             "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86" }, members: [{ name: "حمة عبد القادر", wilaya: "أدرار" }] }
         };
 
-        // تحميل الخريطة من ملف محلي (موجود في نفس المجلد)
+        // تحميل الخريطة من الموقع الاصلي مباشرة
         document.addEventListener('DOMContentLoaded', () => {
             renderNationalMembers();
             
-            // نفترض أنك سميت ملف الخريطة map.svg ورفعته مع الكود
-            fetch('map.svg') 
-            .then(response => {
-                if (!response.ok) throw new Error("ملف الخريطة غير موجود");
-                return response.text();
-            })
-            .then(svgData => {
-                const wrapper = document.getElementById('svg-wrapper');
-                wrapper.innerHTML = svgData;
-                initSmartSVGMap(); // تفعيل الخريطة
+            fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://mohamed-gp.github.io/algeria_69_wilayas/'))
+            .then(response => response.json())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, 'text/html');
+                const svg = doc.querySelector('svg'); 
+                
+                if (svg) {
+                    const wrapper = document.getElementById('svg-wrapper');
+                    wrapper.innerHTML = ''; 
+                    wrapper.appendChild(svg);
+                    initSmartSVGMap(); 
+                } else {
+                    document.getElementById('svg-wrapper').innerHTML = '<p class="text-red-500">حدث خطأ في قراءة الخريطة.</p>';
+                }
             }).catch(e => {
-                document.getElementById('svg-wrapper').innerHTML = `
-                <div class="text-red-500 font-bold p-4 text-center">
-                    <p class="mb-2">خطأ: لم يتم العثور على ملف الخريطة (map.svg).</p>
-                    <p class="text-sm">تأكد من أنك قمت برفع ملف map.svg إلى نفس المكان الموجود فيه هذا الكود على GitHub.</p>
-                </div>`;
+                document.getElementById('svg-wrapper').innerHTML = '<p class="text-red-500">تأكد من اتصالك بالانترنت لجلب الخريطة.</p>';
             });
         });
 
@@ -236,7 +237,7 @@
             });
         }
 
-        // باقي الدوال (كما هي في السابق) للتحكم بالعرض
+        // باقي الدوال للتحكم بالعرض
         function renderNationalMembers() {
             const grid = document.getElementById('national-members-grid');
             nationalMembers.forEach(m => {
