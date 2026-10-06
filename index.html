@@ -10,12 +10,13 @@
         body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; }
         
         .map-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
-        .map-container svg { width: 100%; height: auto; max-height: 550px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        /* تنسيق الخريطة لتبدو واضحة ومتناسبة */
+        .map-container svg { width: 100%; height: auto; max-height: 600px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
         
         /* تنسيقات ذكية لتلوين الولايات */
-        .map-container svg path { fill: #e2e8f0; stroke: #ffffff; stroke-width: 0.8; cursor: pointer; transition: all 0.3s ease; }
-        .map-container svg path:hover { fill: #94a3b8; stroke-width: 1.5; }
-        .map-container svg path.active-wilaya { fill: #1d4ed8; stroke-width: 2; outline: none; }
+        .map-container svg path { fill: #e2e8f0; stroke: #ffffff; stroke-width: 1; cursor: pointer; transition: all 0.3s ease; }
+        .map-container svg path:hover { fill: #94a3b8; stroke-width: 2; }
+        .map-container svg path.active-wilaya { fill: #1d4ed8; stroke-width: 2.5; outline: none; }
         
         .tab-btn.active { border-bottom: 4px solid #16a34a; color: #166534; font-weight: 700; background-color: #f0fdf4;}
     </style>
@@ -41,7 +42,7 @@
             <h2 class="text-lg font-bold mb-4 text-center text-green-700 border-b pb-2">الخريطة التفاعلية</h2>
             
             <div class="map-container flex-grow mb-4 bg-blue-50/30 rounded-xl p-2 border border-gray-100 relative">
-                <!-- الكود سيقوم بجلب الخريطة من الموقع الاصلي -->
+                <!-- الكود سيقرأ ملف الخريطة المحلي map.svg -->
                 <div id="svg-wrapper" class="w-full h-full flex flex-col items-center justify-center text-center">
                     <div class="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-3"></div>
                     <p class="text-blue-600 font-bold">جاري تحميل الخريطة...</p>
@@ -154,7 +155,7 @@
     </div>
 
     <script>
-        // قواعد بيانات النقابة
+        // 1. قواعد بيانات النقابة
         const nationalMembers = [
             { name: "احمد رحيمي", role: "التنظيم والتنسيق", phone: "0671276322" },
             { name: "مولاي لخضرعبد الهادي", role: "الكتابة والعلاقات العامة", phone: "0540731562" },
@@ -191,31 +192,33 @@
             "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86" }, members: [{ name: "حمة عبد القادر", wilaya: "أدرار" }] }
         };
 
-        // تحميل الخريطة من الموقع الاصلي مباشرة
+        // 2. تحميل الخريطة من المستودع الخاص بك مباشرة
         document.addEventListener('DOMContentLoaded', () => {
             renderNationalMembers();
             
-            fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://mohamed-gp.github.io/algeria_69_wilayas/'))
-            .then(response => response.json())
-            .then(data => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(data.contents, 'text/html');
-                const svg = doc.querySelector('svg'); 
-                
-                if (svg) {
-                    const wrapper = document.getElementById('svg-wrapper');
-                    wrapper.innerHTML = ''; 
-                    wrapper.appendChild(svg);
-                    initSmartSVGMap(); 
-                } else {
-                    document.getElementById('svg-wrapper').innerHTML = '<p class="text-red-500">حدث خطأ في قراءة الخريطة.</p>';
-                }
+            // هذا السطر يقرأ ملف map.svg الموجود بجانب index.html
+            fetch('map.svg')
+            .then(response => {
+                if (!response.ok) throw new Error("File not found");
+                return response.text();
+            })
+            .then(svgData => {
+                const wrapper = document.getElementById('svg-wrapper');
+                wrapper.innerHTML = svgData;
+                initSmartSVGMap(); 
             }).catch(e => {
-                document.getElementById('svg-wrapper').innerHTML = '<p class="text-red-500">تأكد من اتصالك بالانترنت لجلب الخريطة.</p>';
+                // رسالة خطأ واضحة في حال نسيان رفع ملف الخريطة
+                document.getElementById('svg-wrapper').innerHTML = `
+                    <div class="bg-red-50 border border-red-300 p-6 rounded-lg text-center max-w-sm">
+                        <span class="text-3xl">⚠️</span>
+                        <h3 class="text-red-700 font-bold text-lg mt-2">ملف الخريطة غير موجود</h3>
+                        <p class="text-red-600 text-sm mt-2">يرجى التأكد من رفع ملف <b>map.svg</b> إلى مستودعك في GitHub لكي تظهر الخريطة هنا.</p>
+                    </div>
+                `;
             });
         });
 
-        // ربط الخريطة عند تحميلها
+        // 3. ربط الخريطة وتفعيل الضغط
         function initSmartSVGMap() {
             const paths = document.querySelectorAll('.map-container svg path');
             paths.forEach(path => {
@@ -227,7 +230,6 @@
                     wilayaNumber = parseInt(wilayaNumber, 10).toString();
                     path.setAttribute('data-w-id', wilayaNumber);
 
-                    // إضافة التفاعل عند النقر
                     path.addEventListener('click', function() {
                         paths.forEach(p => p.classList.remove('active-wilaya'));
                         this.classList.add('active-wilaya');
@@ -237,7 +239,7 @@
             });
         }
 
-        // باقي الدوال للتحكم بالعرض
+        // 4. دوال التحكم في العرض والتبويبات
         function renderNationalMembers() {
             const grid = document.getElementById('national-members-grid');
             nationalMembers.forEach(m => {
