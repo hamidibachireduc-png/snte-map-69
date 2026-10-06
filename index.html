@@ -21,6 +21,9 @@
         .map-container svg path:hover { fill: #94a3b8; stroke-width: 2; }
         .map-container svg path.active-wilaya { fill: #1d4ed8; stroke-width: 2.5; outline: none; }
         
+        .tab-btn { font-size: 0.75rem; padding: 0.5rem; }
+        @media (min-width: 768px) { .tab-btn { font-size: 0.875rem; padding: 0.75rem; } }
+        
         .tab-btn.active { border-bottom: 4px solid #16a34a; color: #166534; font-weight: 700; background-color: #f0fdf4;}
         
         .contact-link { transition: all 0.2s; }
@@ -65,7 +68,7 @@
                 <div>
                     <label class="block text-xs md:text-sm font-bold text-gray-700 mb-1">الجهة:</label>
                     <select id="region-select" class="w-full p-2 border border-gray-300 rounded focus:ring-green-500 text-xs md:text-sm">
-                        <option value="all">المكتب الوطني</option>
+                        <option value="all">المكتب الوطني / المستشارون / الحكماء</option>
                         <option value="الشرق">الشرق</option>
                         <option value="الغرب">الغرب</option>
                         <option value="الوسط 01">الوسط 01</option>
@@ -76,7 +79,7 @@
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs md:text-sm font-bold text-gray-700 mb-1">بحث برقم الولاية (الرسمي):</label>
+                    <label class="block text-xs md:text-sm font-bold text-gray-700 mb-1">بحث برقم الولاية:</label>
                     <input type="number" id="wilaya-search" placeholder="مثال: 16" class="w-full p-2 border border-gray-300 rounded focus:ring-green-500 text-xs md:text-sm">
                 </div>
             </div>
@@ -84,13 +87,15 @@
 
         <!-- قسم عرض بيانات النقابة -->
         <div class="w-full lg:w-1/2 bg-white rounded-xl shadow border border-gray-200 overflow-hidden flex flex-col">
-            <div class="flex border-b bg-gray-50 shrink-0">
-                <button onclick="switchTab('national')" id="tab-national" class="tab-btn active flex-1 py-2 md:py-3 text-xs md:text-sm text-center font-semibold text-gray-600 transition">المكتب الوطني</button>
-                <button onclick="switchTab('regional')" id="tab-regional" class="tab-btn flex-1 py-2 md:py-3 text-xs md:text-sm text-center font-semibold text-gray-600 transition hidden">الأمانة الجهوية</button>
-                <button onclick="switchTab('wilaya')" id="tab-wilaya" class="tab-btn flex-1 py-2 md:py-3 text-xs md:text-sm text-center font-semibold text-gray-600 transition hidden">الأمانة الولائية</button>
+            <div class="flex border-b bg-gray-50 shrink-0 overflow-x-auto custom-scrollbar">
+                <button onclick="switchTab('national')" id="tab-national" class="tab-btn active flex-1 text-center font-semibold text-gray-600 transition whitespace-nowrap min-w-[80px]">المكتب الوطني</button>
+                <button onclick="switchTab('advisors')" id="tab-advisors" class="tab-btn flex-1 text-center font-semibold text-gray-600 transition whitespace-nowrap min-w-[80px]">المستشارون</button>
+                <button onclick="switchTab('elders')" id="tab-elders" class="tab-btn flex-1 text-center font-semibold text-gray-600 transition whitespace-nowrap min-w-[80px]">لجنة الحكماء</button>
+                <button onclick="switchTab('regional')" id="tab-regional" class="tab-btn flex-1 text-center font-semibold text-gray-600 transition hidden whitespace-nowrap min-w-[80px]">الأمانة الجهوية</button>
+                <button onclick="switchTab('wilaya')" id="tab-wilaya" class="tab-btn flex-1 text-center font-semibold text-gray-600 transition hidden whitespace-nowrap min-w-[80px]">الأمانة الولائية</button>
             </div>
 
-            <div class="p-4 md:p-6 content-scroll flex-grow">
+            <div class="p-4 md:p-6 content-scroll flex-grow overflow-x-hidden">
                 
                 <!-- الأمانة الوطنية -->
                 <div id="content-national" class="space-y-4 md:space-y-6">
@@ -107,6 +112,22 @@
                     </div>
                     <h3 class="font-bold text-sm md:text-base text-gray-700 border-b pb-2">أعضاء المكتب الوطني</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3" id="national-members-grid"></div>
+                </div>
+
+                <!-- المستشارون -->
+                <div id="content-advisors" class="hidden space-y-4 md:space-y-6">
+                    <div class="bg-indigo-700 text-white p-3 md:p-4 rounded shadow-sm">
+                        <h2 class="text-lg md:text-xl font-bold text-center">المستشارون</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-3" id="advisors-grid"></div>
+                </div>
+
+                <!-- لجنة الحكماء -->
+                <div id="content-elders" class="hidden space-y-4 md:space-y-6">
+                    <div class="bg-amber-600 text-white p-3 md:p-4 rounded shadow-sm">
+                        <h2 class="text-lg md:text-xl font-bold text-center">لجنة الحكماء</h2>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="elders-grid"></div>
                 </div>
 
                 <!-- الأمانة الجهوية -->
@@ -213,7 +234,25 @@
             { name: "تامي نورين لخضر", role: "علاقات العمل والاتفاقيات", phone: "0675998222 - 0541990943" }
         ];
 
-        // تم تحديث الأرقام لتتطابق مع ترقيم الخريطة (الترقيم الرسمي)، وتم إضافة الأسماء من الإكسيل
+        // المستشارون
+        const advisors = [
+            { role: "مستشار الشؤون القانونية", name: "صيد نبيل", wilaya: "الجزائر غرب", phone: "0560907301 - 0780039231", email: "avocasidnabil@gmail.com" },
+            { role: "مستشار شؤون التربية والبيداغوحيا", name: "بوسالم احمد", wilaya: "الجزائر شرق", phone: "0556 14 50 73", email: "demed86@gmail.com" },
+            { role: "مسؤولة عامة للخلية الوطنية للاعلام والتنظيم", name: "سعيدان بوثينة", wilaya: "اولاد جلال", phone: "0661 15 55 79", email: "saidaneboutheina@gmail.com" },
+            { role: "مستشار المكلف بتقنيات التواصل", name: "حميدي البشير", wilaya: "الجلفة", phone: "0696 38 09 65", email: "bachirofsat@gmail.com" }
+        ];
+
+        // لجنة الحكماء
+        const elders = [
+            { name: "فريد لمناحلية", wilaya: "البليدة", phone: "0556 47 78 79", email: "blidasnte@hotmail.fr" },
+            { name: "فرحات عبد النور", wilaya: "جيجل", phone: "0778 85 98 50", email: "abdenourferhat58@gmail.com" },
+            { name: "عيشوش بغداد", wilaya: "مستغانم", phone: "0660 37 06 07", email: "bmosta376@gmail.com" },
+            { name: "مجاطي على", wilaya: "تلمسان", phone: "0771242455- 0556454007", email: "alimedjatio@gmail.com" },
+            { name: "قوادري محمد", wilaya: "الجلفة", phone: "0664 43 57 95", email: "kouadrimo55@gmail.com" },
+            { name: "بوعينونة خيرة", wilaya: "الجلفة", phone: "0773 10 84 32", email: "" },
+            { name: "محجوبي عبد الله", wilaya: "عين الدفلى", phone: "", email: "" }
+        ];
+
         const wilayasData = [
             { id: "1", name: "أدرار", sec: "صوفي عبد الكريم", phone: "0671 72 96 31", email: "krimolv37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "2", name: "الشلف", sec: "كوري محمد", phone: "0771 54 84 77", email: "mohakouri2023@gmail.com", address: "قرب مركز توزيع و النشر البيداغوجي الشلف", region: "الغرب" },
@@ -269,9 +308,6 @@
             { id: "52", name: "أولاد جلال", sec: "بزيو ياسين", phone: "0660 45 03 15", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "53", name: "عين صالح", sec: "عبد النبي إبراهيم", phone: "0663 52 51 94", email: "bambiibrahim830@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "54", name: "عين قزام", sec: "بن عبد الكريم عبد القادر", phone: "0668 04 39 08", email: "kaadeer90@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
-            
-            // الولايات المستحدثة (بالتطابق مع ترقيم الدولة الرسمي المعتمد في الخريطة)
-            // مع إضافة بيانات الإكسيل التي وضعتها
             { id: "55", name: "تقرت", sec: "عبد الله", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "56", name: "جانت", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
             { id: "57", name: "المغير", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
@@ -350,6 +386,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 renderNationalMembers();
+                renderAdvisors();
+                renderElders();
                 
                 fetch('communes.json')
                     .then(res => res.json())
@@ -403,7 +441,7 @@
             if(!grid) return;
             nationalMembers.forEach(m => {
                 grid.innerHTML += `
-                    <div class="border border-gray-100 rounded p-2 bg-white shadow-sm">
+                    <div class="border border-gray-100 rounded p-2 bg-white shadow-sm hover:shadow-md transition">
                         <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded block mb-1 w-max">${m.role}</span>
                         <h4 class="font-bold text-gray-800 text-xs md:text-sm mb-1">${m.name}</h4>
                         ${generatePhoneLinks(m.phone)}
@@ -411,8 +449,47 @@
             });
         }
 
+        function renderAdvisors() {
+            const grid = document.getElementById('advisors-grid');
+            if(!grid) return;
+            advisors.forEach(a => {
+                grid.innerHTML += `
+                    <div class="border-l-4 border-indigo-500 rounded-r-lg p-3 bg-white shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3 hover:shadow-md transition">
+                        <div>
+                            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded block mb-1 w-max">${a.role}</span>
+                            <div class="flex items-center gap-2">
+                                <h4 class="font-bold text-gray-800 text-sm md:text-base">${a.name}</h4>
+                                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${a.wilaya}</span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col gap-1 w-full md:w-auto">
+                            ${generatePhoneLinks(a.phone)}
+                            ${a.email ? generateEmailLink(a.email) : ''}
+                        </div>
+                    </div>`;
+            });
+        }
+
+        function renderElders() {
+            const grid = document.getElementById('elders-grid');
+            if(!grid) return;
+            elders.forEach(e => {
+                grid.innerHTML += `
+                    <div class="border border-amber-200 rounded p-3 bg-amber-50 shadow-sm hover:shadow-md transition">
+                        <div class="flex items-center gap-2 mb-2 pb-2 border-b border-amber-200">
+                            <h4 class="font-bold text-amber-900 text-sm md:text-base">${e.name}</h4>
+                            <span class="text-[10px] bg-white text-amber-700 border border-amber-300 px-2 py-0.5 rounded-full">${e.wilaya}</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            ${generatePhoneLinks(e.phone)}
+                            ${e.email ? generateEmailLink(e.email) : ''}
+                        </div>
+                    </div>`;
+            });
+        }
+
         function switchTab(tabId) {
-            ['national', 'regional', 'wilaya'].forEach(t => {
+            ['national', 'advisors', 'elders', 'regional', 'wilaya'].forEach(t => {
                 const content = document.getElementById(`content-${t}`);
                 const tabBtn = document.getElementById(`tab-${t}`);
                 if(content) content.classList.add('hidden');
