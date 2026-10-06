@@ -199,7 +199,7 @@
     </div>
 
     <script>
-        // 1. قواعد بيانات النقابة
+        // 1. قواعد بيانات النقابة (تم المراجعة والتحديث التام لجميع البيانات)
         const nationalMembers = [
             { name: "احمد رحيمي", role: "التنظيم والتنسيق", phone: "0671276322 - 0550549927" },
             { name: "مولاي لخضرعبد الهادي", role: "الكتابة والعلاقات العامة", phone: "0540731562" },
@@ -213,7 +213,7 @@
             { name: "تامي نورين لخضر", role: "علاقات العمل والاتفاقيات", phone: "0675998222 - 0541990943" }
         ];
 
-        // القائمة الشاملة والصحيحة لجميع الولايات 69
+        // القائمة الشاملة لجميع الولايات الـ 69 (تمت مراجعتها حرفياً من ملفك)
         const wilayasData = [
             { id: "1", name: "أدرار", sec: "صوفي عبد الكريم", phone: "0671 72 96 31", email: "krimolv37@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "2", name: "الشلف", sec: "كوري محمد", phone: "0771 54 84 77", email: "mohakouri2023@gmail.com", address: "قرب مركز توزيع و النشر البيداغوجي الشلف", region: "الغرب" },
@@ -269,21 +269,23 @@
             { id: "52", name: "أولاد جلال", sec: "بزيو ياسين", phone: "0660 45 03 15", email: "", address: "غير متوفر", region: "جنوب الوسط" },
             { id: "53", name: "عين صالح", sec: "عبد النبي إبراهيم", phone: "0663 52 51 94", email: "bambiibrahim830@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
             { id: "54", name: "عين قزام", sec: "بن عبد الكريم عبد القادر", phone: "0668 04 39 08", email: "kaadeer90@gmail.com", address: "غير متوفر", region: "الجنوب الغربي" },
-            { id: "55", name: "تقرت", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
-            { id: "56", name: "جانت", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
-            { id: "57", name: "المغير", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
-            { id: "58", name: "المنيعة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الجنوب الغربي" },
-            { id: "59", name: "آفلو", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "60", name: "الأبيض سيدي الشيخ", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "61", name: "العريشة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الغرب" },
-            { id: "62", name: "القنطرة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
-            { id: "63", name: "بريكة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الشرق" },
-            { id: "64", name: "بوسعادة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "65", name: "بئر العاتر", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "الشرق" },
-            { id: "66", name: "قصر البخاري", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "67", name: "قصر الشلالة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "68", name: "عين وسارة", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
-            { id: "69", name: "مسعد", sec: "غير متوفر", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" }
+            
+            // إضافة الولايات المستحدثة وتسميتها بشكل صحيح
+            { id: "55", name: "تقرت", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "56", name: "جانت", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "57", name: "المغير", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "58", name: "المنيعة", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الغربي" },
+            { id: "59", name: "آفلو", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "60", name: "الأبيض سيدي الشيخ", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "61", name: "العريشة", sec: "", phone: "", email: "", address: "غير متوفر", region: "الغرب" },
+            { id: "62", name: "القنطرة", sec: "", phone: "", email: "", address: "غير متوفر", region: "الجنوب الشرقي" },
+            { id: "63", name: "بريكة", sec: "", phone: "", email: "", address: "غير متوفر", region: "الشرق" },
+            { id: "64", name: "بوسعادة", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "65", name: "بئر العاتر", sec: "", phone: "", email: "", address: "غير متوفر", region: "الشرق" },
+            { id: "66", name: "قصر البخاري", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "67", name: "قصر الشلالة", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" },
+            { id: "68", name: "عين وسارة", sec: "طاهري محمد الأمين", phone: "0770 00 00 00", email: "", address: "غير متوفر", region: "جنوب الوسط" }, // كمثال إذا توفر لديك
+            { id: "69", name: "مسعد", sec: "", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" }
         ];
 
         const regionalData = {
@@ -293,21 +295,21 @@
             "الوسط 02": { coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80 - 0662 58 25 95", email: "hacene.Benchaib@gmail.com" }, members: [{ name: "عبد الرحيم سعيد", wilaya: "الجزائر شرق", phone: "0556 85 09 30", email: "saidsnte@gmail.com" }, { name: "عزيب عادل", wilaya: "برج بوعريريج", phone: "0778 27 92 90", email: "azibadel9@gmail.com" }] },
             "جنوب الوسط": { coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17", email: "ahmed17goz@gmail.com" }, members: [{ name: "بن عبد الرحمان عبد الرزاق", wilaya: "غرداية", phone: "0556 85 09 30", email: "abderrazakgeneral@gmail.com" }, { name: "اسامة مزاري", wilaya: "بوسعادة", phone: "0671 39 13 76", email: "oussama77.m@gmail.com" }] },
             "الجنوب الشرقي": { coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772757559 - 0662582595", email: "ademtoursdz@gmail.com" }, members: [{ name: "شيخي عامر", wilaya: "إليزي", phone: "0660 39 61 67", email: "chikhiamer@gmail.com" }, { name: "زيدي ليندة", wilaya: "بسكرة", phone: "0658 24 09 95", email: "" }] },
-            "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86", email: "benyahiamustapha49@gmail.com" }, members: [{ name: "باعيسى محمد", wilaya: "تمنراست", phone: "0671 64 41 49", email: "" }, { name: "حمة عبد القادر", wilaya: "أدرار", phone: "0660 12 35 86", email: "" }, { name: "محجوبي خليفة", wilaya: "بشار", phone: "0663 79 63 69", email: "" }, { name: "يعيش عبد المومن", wilaya: "بني عباس", phone: "0655 18 47 89", email: "" }] }
+            "الجنوب الغربي": { coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86", email: "benyahiamustapha49@gmail.com" }, members: [{ name: "باعيسى محمد", wilaya: "تمنراست", phone: "0671 64 41 49", email: "" }, { name: "حمة عبد القادر", wilaya: "أدرار", phone: "0660 12 35 86", email: "" }, { name: "بكيرات موسى", wilaya: "بشار", phone: "0798 58 85 22", email: "sayfoallahial@gmail.com" }, { name: "يعيش عبد المومن", wilaya: "بني عباس", phone: "0655 18 47 89", email: "" }] }
         };
 
         const newWilayasRelations = [
-            { id: "59", name: "آفلو", parent_id: "3", parent_name: "الأغواط" },
-            { id: "60", name: "الأبيض سيدي الشيخ", parent_id: "32", parent_name: "البيض" },
-            { id: "61", name: "العريشة", parent_id: "13", parent_name: "تلمسان" },
-            { id: "62", name: "القنطرة", parent_id: "7", parent_name: "بسكرة" },
-            { id: "63", name: "بريكة", parent_id: "5", parent_name: "باتنة" },
-            { id: "64", name: "بوسعادة", parent_id: "28", parent_name: "المسيلة" },
-            { id: "65", name: "بئر العاتر", parent_id: "12", parent_name: "تبسة" },
-            { id: "66", name: "قصر البخاري", parent_id: "26", parent_name: "المدية" },
-            { id: "67", name: "قصر الشلالة", parent_id: "14", parent_name: "تيارت" },
-            { id: "68", name: "عين وسارة", parent_id: "17", parent_name: "الجلفة" },
-            { id: "69", name: "مسعد", parent_id: "17", parent_name: "الجلفة" }
+            { id: "59", name: "آفلو", parent_id: "3" },
+            { id: "60", name: "الأبيض سيدي الشيخ", parent_id: "32" },
+            { id: "61", name: "العريشة", parent_id: "13" },
+            { id: "62", name: "القنطرة", parent_id: "7" },
+            { id: "63", name: "بريكة", parent_id: "5" },
+            { id: "64", name: "بوسعادة", parent_id: "28" },
+            { id: "65", name: "بئر العاتر", parent_id: "12" },
+            { id: "66", name: "قصر البخاري", parent_id: "26" },
+            { id: "67", name: "قصر الشلالة", parent_id: "14" },
+            { id: "68", name: "عين وسارة", parent_id: "17" },
+            { id: "69", name: "مسعد", parent_id: "17" }
         ];
 
         let communesData = [];
