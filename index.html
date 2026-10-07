@@ -132,9 +132,8 @@
                 <!-- الأمانة الوطنية -->
                 <div id="content-national" class="space-y-4 md:space-y-6">
                     <div class="bg-red-50 border-l-4 border-red-600 p-3 md:p-4 rounded flex justify-between items-center">
-                        <!-- تنسيق بطاقة الأمين العام (المرجعي) -->
                         <div class="flex flex-col-reverse md:flex-row items-center gap-4 w-full text-center md:text-right">
-                            <div class="flex-grow">
+                            <div class="flex-grow w-full">
                                 <h2 class="text-md md:text-lg font-bold text-red-800">الأمين العام الوطني</h2>
                                 <p class="text-lg md:text-xl font-bold text-gray-900 mt-1">قويدر يحياوي</p>
                                 <div class="flex flex-col gap-2 mt-2 w-full max-w-xs mx-auto md:mx-0 md:ml-auto" dir="ltr">
@@ -153,9 +152,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-xs md:text-sm text-gray-600 mt-2"><a href="mailto:Kouidery@ymail.com" class="hover:underline">📧 Kouidery@ymail.com</a></p>
+                                <p class="text-xs md:text-sm text-gray-600 mt-2 text-center md:text-right w-full"><a href="mailto:Kouidery@ymail.com" class="hover:underline">📧 Kouidery@ymail.com</a></p>
                             </div>
-                            <!-- الصورة الدائرية الكبيرة -->
                             <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-white overflow-hidden flex-shrink-0">
                                 <img src="images/sg_kwaider.jpg" onerror="this.src=defaultAvatar" alt="قويدر يحياوي" class="avatar-img">
                             </div>
@@ -188,7 +186,6 @@
                         <h2 class="text-base md:text-lg font-bold">جهة التنسيق: <span id="display-region-name" class="text-yellow-300"></span></h2>
                     </div>
                     
-                    <!-- تنسيق المنسق الجهوي ليكون مطابقاً للأمين العام الوطني -->
                     <div class="bg-green-50 border-l-4 border-green-600 p-3 md:p-4 rounded-xl shadow-sm">
                         <div class="flex justify-between items-start mb-4">
                             <span class="bg-green-600 text-white text-xs font-bold px-2 py-1 rounded inline-block">المنسق الجهوي</span>
@@ -201,7 +198,6 @@
                                 <div id="reg-coordinator-phone-container" class="mt-2 w-full max-w-xs mx-auto md:mx-0 md:ml-auto" dir="ltr"></div>
                                 <div id="reg-coordinator-email-container" class="mt-2 text-center md:text-right"></div>
                             </div>
-                            <!-- الصورة الدائرية الكبيرة للمنسق -->
                             <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-white overflow-hidden flex-shrink-0">
                                 <img id="reg-coordinator-img" src="" onerror="this.src=defaultAvatar" alt="المنسق الجهوي" class="avatar-img">
                             </div>
@@ -220,7 +216,6 @@
                         <h2 class="text-lg md:text-xl font-bold text-center">ولاية <span id="display-wilaya-name" class="text-yellow-300 font-bold text-xl md:text-2xl"></span></h2>
                     </div>
 
-                    <!-- تنسيق الأمين الولائي ليكون مطابقاً للأمين العام الوطني -->
                     <div id="wilaya-data-found" class="bg-blue-50 border-l-4 border-blue-600 p-3 md:p-4 rounded-xl shadow-sm">
                         <span class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded mb-4 inline-block">الأمين العام الولائي</span>
                         
@@ -234,7 +229,6 @@
                                     <span class="font-bold" id="wilaya-sec-address"></span>
                                 </div>
                             </div>
-                            <!-- الصورة الدائرية الكبيرة للأمين الولائي -->
                             <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-white overflow-hidden flex-shrink-0">
                                 <img id="wilaya-sec-img" src="" onerror="this.src=defaultAvatar" alt="صورة الأمين الولائي" class="avatar-img">
                             </div>
@@ -370,6 +364,7 @@
             { id: "69", name: "مسعد", sec: "عبد الوهاب محمد", phone: "", email: "", address: "غير متوفر", region: "جنوب الوسط" }
         ];
 
+        // تم تحديث بيانات الأعضاء لتشمل جميع الأعضاء الـ 23 حسب ملف الإكسيل الجديد
         const regionalData = {
             "الشرق": { id: "reg_east", coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59", email: "abderrahmanedjafri@yahoo.fr" }, members: [{ id: "rm_1", name: "بوقطوف توفيق", wilaya: "تبسة", phone: "0697 79 75 28", email: "sntetoufik12@gmail.com" }, { id: "rm_2", name: "خالد حجازي", wilaya: "باتنة", phone: "0663 91 55 34", email: "sntebatna@gmail.com" }] },
             "الغرب": { id: "reg_west", coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776484477", email: "sntemosta@gmail.com" }, members: [{ id: "rm_3", name: "نجيب عيموش", wilaya: "غليزان", phone: "0550341143", email: "sntenadjib48@gmail.com" }, { id: "rm_4", name: "خليفي شريف عبد الهادي", wilaya: "تلمسان", phone: "0697119072- 0770292740", email: "khelifiabdelhadi13@gmail.com" }] },
@@ -401,7 +396,6 @@
             return phone.toString().replace(/[^0-9]/g, '');
         }
 
-        // دالة الأزرار لتتناسب مع جميع البطاقات بشكل مرتب
         function generatePhoneLinks(phoneStr) {
             if(!phoneStr || phoneStr.toString().trim() === "") return '<span class="text-gray-400 font-normal text-xs mt-2 block">غير متوفر</span>';
             const phones = phoneStr.toString().split(/[-/]/);
@@ -600,6 +594,7 @@
             
             const membersGrid = document.getElementById('reg-members-grid');
             membersGrid.innerHTML = '';
+            // عرض جميع أعضاء الأمانة الجهوية بالتصميم الموحد
             data.members.forEach(m => {
                 membersGrid.innerHTML += `
                     <div class="member-card">
