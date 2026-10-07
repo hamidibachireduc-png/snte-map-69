@@ -262,17 +262,7 @@
     <script>
         const defaultAvatar = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239ca3af"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 
-        // تحديث الدالة لمعالجة الروابط التي تحتوي على blob بشكل صحيح
-        function getImagePath(imgStr) {
-            if (!imgStr || imgStr.trim() === '') return defaultAvatar;
-            
-            if (imgStr.startsWith('http')) {
-                // تحويل الرابط الذي يحتوي على blob إلى رابط مباشر (raw)
-                return imgStr.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/').split('?')[0]; 
-            }
-            
-            return `images/${imgStr}.jpg`; 
-        }
+        // تم إلغاء أي دوائر معقدة أو ذكية، وتم إرجاع المصفوفات إلى التسميات البسيطة جداً (الأولى)
 
         const nationalMembers = [
             { id: "nat_1", name: "احمد رحيمي", role: "الأمين الوطني المكلف بالتنظيم والتنسيق.", phone: "0671276322 - 0550549927" },
@@ -295,12 +285,12 @@
         ];
 
         const elders = [
-            { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/adv_1.jpg?raw=true", name: "فريد لمناحلية", wilaya: "البليدة", phone: "0556 47 78 79", email: "blidasnte@hotmail.fr" },
+            { id: "eld_1", name: "فريد لمناحلية", wilaya: "البليدة", phone: "0556 47 78 79", email: "blidasnte@hotmail.fr" },
             { id: "eld_2", name: "فرحات عبد النور", wilaya: "جيجل", phone: "0778 85 98 50", email: "abdenourferhat58@gmail.com" },
             { id: "eld_3", name: "عيشوش بغداد", wilaya: "مستغانم", phone: "0660 37 06 07", email: "bmosta376@gmail.com" },
             { id: "eld_4", name: "مجاطي على", wilaya: "تلمسان", phone: "0771242455- 0556454007", email: "alimedjatio@gmail.com" },
             { id: "eld_5", name: "قوادري محمد", wilaya: "الجلفة", phone: "0664 43 57 95", email: "kouadrimo55@gmail.com" },
-            { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/adv_6.jpg?raw=true", name: "بوعينونة خيرة", wilaya: "الجلفة", phone: "0773 10 84 32", email: "" },
+            { id: "eld_6", name: "بوعينونة خيرة", wilaya: "الجلفة", phone: "0773 10 84 32", email: "" },
             { id: "eld_7", name: "محجوبي عبد الله", wilaya: "عين الدفلى", phone: "", email: "" }
         ];
 
@@ -377,13 +367,13 @@
         ];
 
         const regionalData = {
-            "الشرق": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_1.jpg?raw=true", coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59", email: "abderrahmanedjafri@yahoo.fr" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_2.jpg?raw=true", name: "بوقطوف توفيق", wilaya: "تبسة", phone: "0697 79 75 28", email: "sntetoufik12@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_3.jpg?raw=true", name: "خالد حجازي", wilaya: "باتنة", phone: "0663 91 55 34", email: "sntebatna@gmail.com" }] },
-            "الغرب": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_4.jpg?raw=true", coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776484477", email: "sntemosta@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_5.jpg?raw=true", name: "نجيب عيموش", wilaya: "غليزان", phone: "0550341143", email: "sntenadjib48@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_6.jpg?raw=true", name: "خليفي شريف عبد الهادي", wilaya: "تلمسان", phone: "0697119072- 0770292740", email: "khelifiabdelhadi13@gmail.com" }] },
-            "الوسط 01": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_7.jpg?raw=true", coordinator: { name: "حجلاوي أحمد", wilaya: "عين الدفلى", phone: "0771 29 13 71", email: "hadjlaouiahmed@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_8.jpg?raw=true", name: "بوسالم احمد", wilaya: "الجزائر شرق", phone: "0556 14 50 73", email: "demed86@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_9.jpg?raw=true", name: "نعمان رابح", wilaya: "تيبازة", phone: "0659502817- 0665253410", email: "ens.namane@gmail.com" }] },
-            "الوسط 02": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_10.jpg?raw=true", coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80 - 0662 58 25 95", email: "hacene.Benchaib@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_11.jpg?raw=true", name: "عبد الرحيم سعيد", wilaya: "الجزائر شرق", phone: "0556 85 09 30", email: "saidsnte@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_12.jpg?raw=true", name: "عزيب عادل", wilaya: "برج بوعريريج", phone: "0778 27 92 90", email: "azibadel9@gmail.com" }] },
-            "جنوب الوسط": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_13.jpg?raw=true", coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17", email: "ahmed17goz@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_14.jpg?raw=true", name: "بن عبد الرحمان عبد الرزاق", wilaya: "غرداية", phone: "0556 85 09 30", email: "abderrazakgeneral@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_15.jpg?raw=true", name: "اسامة مزاري", wilaya: "بوسعادة", phone: "0671 39 13 76", email: "oussama77.m@gmail.com" }] },
-            "الجنوب الشرقي": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_16.jpg?raw=true", coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772757559 - 0662582595", email: "ademtoursdz@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_17.jpg?raw=true", name: "شيخي عامر", wilaya: "إليزي", phone: "0660 39 61 67", email: "chikhiamer@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_18.jpg?raw=true", name: "زيدي ليندة", wilaya: "بسكرة", phone: "0658 24 09 95", email: "" }] },
-            "الجنوب الغربي": { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/reg_swest.jpg?raw=true", coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86", email: "benyahiamustapha49@gmail.com" }, members: [{ id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_20.jpg?raw=true", name: "باعيسى محمد", wilaya: "تمنراست", phone: "0671 64 41 49", email: "" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_21.jpg?raw=true", name: "حمة عبد القادر", wilaya: "أدرار", phone: "0660 12 35 86", email: "" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_22.jpg?raw=true", name: "بكيرات موسى", wilaya: "بشار", phone: "0798 58 85 22", email: "sayfoallahial@gmail.com" }, { id: "https://github.com/hamidibachireduc-png/snte-map-69/blob/main/images/rm_23.jpg?raw=true", name: "يعيش عبد المومن", wilaya: "بني عباس", phone: "0655 18 47 89", email: "" }] }
+            "الشرق": { id: "rm_1", coordinator: { name: "جعفري عبد الرحمان", wilaya: "سوق أهراس", phone: "0775 58 65 59", email: "abderrahmanedjafri@yahoo.fr" }, members: [{ id: "rm_2", name: "بوقطوف توفيق", wilaya: "تبسة", phone: "0697 79 75 28", email: "sntetoufik12@gmail.com" }, { id: "rm_3", name: "خالد حجازي", wilaya: "باتنة", phone: "0663 91 55 34", email: "sntebatna@gmail.com" }] },
+            "الغرب": { id: "rm_4", coordinator: { name: "راشدي الهواري", wilaya: "مستغانم", phone: "0776484477", email: "sntemosta@gmail.com" }, members: [{ id: "rm_5", name: "نجيب عيموش", wilaya: "غليزان", phone: "0550341143", email: "sntenadjib48@gmail.com" }, { id: "rm_6", name: "خليفي شريف عبد الهادي", wilaya: "تلمسان", phone: "0697119072- 0770292740", email: "khelifiabdelhadi13@gmail.com" }] },
+            "الوسط 01": { id: "rm_7", coordinator: { name: "حجلاوي أحمد", wilaya: "عين الدفلى", phone: "0771 29 13 71", email: "hadjlaouiahmed@gmail.com" }, members: [{ id: "rm_8", name: "بوسالم احمد", wilaya: "الجزائر شرق", phone: "0556 14 50 73", email: "demed86@gmail.com" }, { id: "rm_9", name: "نعمان رابح", wilaya: "تيبازة", phone: "0659502817- 0665253410", email: "ens.namane@gmail.com" }] },
+            "الوسط 02": { id: "rm_10", coordinator: { name: "حسان بن شعيب", wilaya: "البليدة", phone: "0554 90 65 80 - 0662 58 25 95", email: "hacene.Benchaib@gmail.com" }, members: [{ id: "rm_11", name: "عبد الرحيم سعيد", wilaya: "الجزائر شرق", phone: "0556 85 09 30", email: "saidsnte@gmail.com" }, { id: "rm_12", name: "عزيب عادل", wilaya: "برج بوعريريج", phone: "0778 27 92 90", email: "azibadel9@gmail.com" }] },
+            "جنوب الوسط": { id: "rm_13", coordinator: { name: "قزيم أحمد", wilaya: "الجلفة", phone: "0673 16 43 17", email: "ahmed17goz@gmail.com" }, members: [{ id: "rm_14", name: "بن عبد الرحمان عبد الرزاق", wilaya: "غرداية", phone: "0556 85 09 30", email: "abderrazakgeneral@gmail.com" }, { id: "rm_15", name: "اسامة مزاري", wilaya: "بوسعادة", phone: "0671 39 13 76", email: "oussama77.m@gmail.com" }] },
+            "الجنوب الشرقي": { id: "rm_16", coordinator: { name: "باي فؤاد", wilaya: "الوادي", phone: "0772757559 - 0662582595", email: "ademtoursdz@gmail.com" }, members: [{ id: "rm_17", name: "شيخي عامر", wilaya: "إليزي", phone: "0660 39 61 67", email: "chikhiamer@gmail.com" }, { id: "rm_18", name: "زيدي ليندة", wilaya: "بسكرة", phone: "0658 24 09 95", email: "" }] },
+            "الجنوب الغربي": { id: "reg_swest", coordinator: { name: "بن يحي مصطفى", wilaya: "تيميمون", phone: "0663 66 46 86", email: "benyahiamustapha49@gmail.com" }, members: [{ id: "rm_20", name: "باعيسى محمد", wilaya: "تمنراست", phone: "0671 64 41 49", email: "" }, { id: "rm_21", name: "حمة عبد القادر", wilaya: "أدرار", phone: "0660 12 35 86", email: "" }, { id: "rm_22", name: "بكيرات موسى", wilaya: "بشار", phone: "0798 58 85 22", email: "sayfoallahial@gmail.com" }, { id: "rm_23", name: "يعيش عبد المومن", wilaya: "بني عباس", phone: "0655 18 47 89", email: "" }] }
         };
 
         const newWilayasRelations = [
@@ -511,7 +501,7 @@
                 grid.innerHTML += `
                     <div class="member-card">
                         <div class="member-photo-container">
-                            <img src="${getImagePath(m.id)}" onerror="this.src=defaultAvatar" class="avatar-img">
+                            <img src="images/${m.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
                         <div class="member-info-container">
                             <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded block mb-2 w-max mx-auto md:mx-0">${m.role}</span>
@@ -529,7 +519,7 @@
                 grid.innerHTML += `
                     <div class="member-card border-l-4 border-indigo-500">
                         <div class="member-photo-container">
-                            <img src="${getImagePath(a.id)}" onerror="this.src=defaultAvatar" class="avatar-img">
+                            <img src="images/${a.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
                         <div class="member-info-container">
                             <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-1 rounded block mb-2 w-max mx-auto md:mx-0">${a.role}</span>
@@ -551,7 +541,7 @@
                 grid.innerHTML += `
                     <div class="member-card border-amber-200">
                         <div class="member-photo-container bg-amber-50 border-amber-200">
-                            <img src="${getImagePath(e.id)}" onerror="this.src=defaultAvatar" class="avatar-img">
+                            <img src="images/${e.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
                         <div class="member-info-container">
                             <div class="flex flex-col md:flex-row justify-between items-center mb-1 text-center md:text-right gap-1">
@@ -601,7 +591,7 @@
             document.getElementById('reg-coordinator-phone-container').innerHTML = generatePhoneLinks(data.coordinator.phone);
             document.getElementById('reg-coordinator-email-container').innerHTML = generateEmailLink(data.coordinator.email);
             
-            document.getElementById('reg-coordinator-img').src = getImagePath(data.id);
+            document.getElementById('reg-coordinator-img').src = `images/${data.id}.jpg`;
             
             const membersGrid = document.getElementById('reg-members-grid');
             membersGrid.innerHTML = '';
@@ -609,7 +599,7 @@
                 membersGrid.innerHTML += `
                     <div class="member-card">
                         <div class="member-photo-container">
-                            <img src="${getImagePath(m.id)}" onerror="this.src=defaultAvatar" class="avatar-img">
+                            <img src="images/${m.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
                         <div class="member-info-container">
                             <div class="flex flex-col md:flex-row justify-between items-center mb-1 text-center md:text-right gap-1">
@@ -698,7 +688,7 @@
                 document.getElementById('wilaya-no-data').classList.add('hidden');
                 document.getElementById('wilaya-data-additional').classList.remove('hidden');
                 
-                document.getElementById('wilaya-sec-img').src = getImagePath(wilayaId);
+                document.getElementById('wilaya-sec-img').src = `images/${wilayaId}.jpg`;
 
                 document.getElementById('wilaya-sec-name').textContent = w.sec;
                 document.getElementById('wilaya-sec-phone-container').innerHTML = generatePhoneLinks(w.phone);
