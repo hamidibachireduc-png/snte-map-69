@@ -35,6 +35,37 @@
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
         .avatar-img { object-fit: cover; width: 100%; height: 100%; }
+        
+        /* تحسينات لبطاقات الأعضاء لجعل الصورة بارزة كما طلب المستخدم */
+        .member-card {
+            display: flex;
+            align-items: stretch;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+        }
+        .member-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        .member-photo-container {
+            width: 100px;
+            flex-shrink: 0;
+            background-color: #f3f4f6;
+            border-left: 1px solid #e5e7eb; /* فاصل بين الصورة والبيانات */
+        }
+        @media (min-width: 768px) {
+            .member-photo-container { width: 120px; }
+        }
+        .member-info-container {
+            padding: 0.75rem;
+            flex-grow: 1;
+            display: flex;
+            flex-col;
+            justify-content: center;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -102,12 +133,8 @@
                 <!-- الأمانة الوطنية -->
                 <div id="content-national" class="space-y-4 md:space-y-6">
                     <div class="bg-red-50 border-l-4 border-red-600 p-3 md:p-4 rounded flex justify-between items-center">
-                        <div class="flex items-center gap-4">
-                            <!-- صورة الأمين العام -->
-                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-red-300 bg-white overflow-hidden flex-shrink-0">
-                                <img src="images/sg_kwaider.jpg" onerror="this.src=defaultAvatar" alt="قويدر يحياوي" class="avatar-img">
-                            </div>
-                            <div>
+                        <div class="flex items-center gap-4 w-full">
+                            <div class="flex-grow">
                                 <h2 class="text-md md:text-lg font-bold text-red-800">الأمين العام الوطني</h2>
                                 <p class="text-lg md:text-xl font-bold text-gray-900 mt-1">قويدر يحياوي</p>
                                 <div class="flex flex-wrap gap-2 mt-2" dir="ltr">
@@ -116,10 +143,16 @@
                                 </div>
                                 <p class="text-xs md:text-sm text-gray-600 mt-2"><a href="mailto:Kouidery@ymail.com" class="hover:underline">📧 Kouidery@ymail.com</a></p>
                             </div>
+                            <!-- صورة الأمين العام مكبرة وبارزة -->
+                            <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white shadow-md bg-white overflow-hidden flex-shrink-0">
+                                <img src="images/sg_kwaider.jpg" onerror="this.src=defaultAvatar" alt="قويدر يحياوي" class="avatar-img">
+                            </div>
                         </div>
                     </div>
+                    
                     <h3 class="font-bold text-sm md:text-base text-gray-700 border-b pb-2">أعضاء المكتب الوطني</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 md:gap-3" id="national-members-grid"></div>
+                    <!-- استخدام التصميم الجديد (member-card) لعرض الصور بشكل كبير -->
+                    <div class="grid grid-cols-1 gap-3 md:gap-4" id="national-members-grid"></div>
                 </div>
 
                 <!-- المستشارون -->
@@ -127,7 +160,8 @@
                     <div class="bg-indigo-700 text-white p-3 md:p-4 rounded shadow-sm">
                         <h2 class="text-lg md:text-xl font-bold text-center">المستشارون</h2>
                     </div>
-                    <div class="grid grid-cols-1 gap-3" id="advisors-grid"></div>
+                    <!-- استخدام التصميم الجديد -->
+                    <div class="grid grid-cols-1 gap-3 md:gap-4" id="advisors-grid"></div>
                 </div>
 
                 <!-- لجنة الحكماء -->
@@ -135,7 +169,8 @@
                     <div class="bg-amber-600 text-white p-3 md:p-4 rounded shadow-sm">
                         <h2 class="text-lg md:text-xl font-bold text-center">لجنة الحكماء</h2>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="elders-grid"></div>
+                    <!-- استخدام التصميم الجديد -->
+                    <div class="grid grid-cols-1 gap-3 md:gap-4" id="elders-grid"></div>
                 </div>
 
                 <!-- الأمانة الجهوية -->
@@ -144,34 +179,36 @@
                         <h2 class="text-base md:text-lg font-bold">جهة التنسيق: <span id="display-region-name" class="text-yellow-300"></span></h2>
                     </div>
                     
-                    <div class="bg-white border-2 border-green-500 rounded-xl p-4 md:p-5 shadow-sm">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded inline-block">المنسق الجهوي</span>
-                            <span class="text-xs md:text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded font-bold" id="reg-coordinator-wilaya"></span>
+                    <div class="bg-white border-2 border-green-500 rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
+                        <!-- بيانات المنسق الجهوي -->
+                        <div class="p-4 md:p-5 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded inline-block">المنسق الجهوي</span>
+                                <span class="text-xs md:text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded font-bold" id="reg-coordinator-wilaya"></span>
+                            </div>
+                            
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4" id="reg-coordinator-name"></h3>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 text-center text-lg">📱</span>
+                                    <div id="reg-coordinator-phone-container" class="flex-grow"></div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-6 text-center text-lg">📧</span>
+                                    <div id="reg-coordinator-email-container" class="flex-grow"></div>
+                                </div>
+                            </div>
                         </div>
-                        
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-green-300 bg-gray-50 overflow-hidden flex-shrink-0">
-                                <img id="reg-coordinator-img" src="" onerror="this.src=defaultAvatar" alt="المنسق الجهوي" class="avatar-img">
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-gray-800" id="reg-coordinator-name"></h3>
-                        </div>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 text-center text-lg">📱</span>
-                                <div id="reg-coordinator-phone-container" class="flex-grow"></div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="w-6 text-center text-lg">📧</span>
-                                <div id="reg-coordinator-email-container" class="flex-grow"></div>
-                            </div>
+                        <!-- صورة المنسق الجهوي مكبرة في جانب البطاقة -->
+                        <div class="w-full md:w-40 h-48 md:h-auto bg-gray-100 border-t md:border-t-0 md:border-r border-gray-200">
+                            <img id="reg-coordinator-img" src="" onerror="this.src=defaultAvatar" alt="المنسق الجهوي" class="avatar-img">
                         </div>
                     </div>
                     
-                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 md:p-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-xl p-3 md:p-4 mt-4">
                         <h3 class="text-sm md:text-md font-bold text-gray-800 border-b pb-2 mb-3">أعضاء الأمانة الجهوية</h3>
-                        <div id="reg-members-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                        <div id="reg-members-grid" class="grid grid-cols-1 gap-3 md:gap-4"></div>
                     </div>
                 </div>
 
@@ -181,44 +218,45 @@
                         <h2 class="text-lg md:text-xl font-bold text-center">ولاية <span id="display-wilaya-name" class="text-yellow-300 font-bold text-xl md:text-2xl"></span></h2>
                     </div>
 
-                    <div id="wilaya-data-found" class="bg-white border-2 border-blue-200 rounded-xl p-4 md:p-6 shadow-sm">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mb-4 inline-block">الأمين العام الولائي</span>
-                        
-                        <div class="flex items-center gap-4 mb-5">
-                            <!-- صورة الأمين الولائي التي تتغير حسب الولاية -->
-                            <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-blue-300 bg-gray-50 overflow-hidden flex-shrink-0 shadow-inner">
-                                <img id="wilaya-sec-img" src="" onerror="this.src=defaultAvatar" alt="صورة الأمين الولائي" class="avatar-img">
-                            </div>
-                            <h3 class="text-xl md:text-2xl font-bold text-gray-800" id="wilaya-sec-name"></h3>
-                        </div>
-                        
-                        <div class="space-y-3 md:space-y-4 text-gray-700">
-                            <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
-                                <span class="w-8 text-lg md:text-xl">📱</span>
-                                <div class="flex-grow overflow-hidden">
-                                    <span class="block text-[10px] md:text-xs text-gray-500">رقم الهاتف</span>
-                                    <div id="wilaya-sec-phone-container" class="font-bold mt-1 text-sm md:text-base" dir="ltr"></div>
+                    <div id="wilaya-data-found" class="bg-white border-2 border-blue-200 rounded-xl overflow-hidden shadow-sm flex flex-col md:flex-row">
+                        <!-- بيانات الأمين الولائي -->
+                        <div class="p-4 md:p-6 flex-grow">
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded mb-4 inline-block">الأمين العام الولائي</span>
+                            
+                            <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-5" id="wilaya-sec-name"></h3>
+                            
+                            <div class="space-y-3 md:space-y-4 text-gray-700">
+                                <div class="flex items-center p-2 bg-gray-50 rounded border border-gray-100">
+                                    <span class="w-8 text-lg">📱</span>
+                                    <div class="flex-grow overflow-hidden">
+                                        <span class="block text-[10px] text-gray-500">رقم الهاتف</span>
+                                        <div id="wilaya-sec-phone-container" class="font-bold mt-1 text-sm" dir="ltr"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-2 bg-gray-50 rounded border border-gray-100">
+                                    <span class="w-8 text-lg">📧</span>
+                                    <div class="flex-grow overflow-hidden">
+                                        <span class="block text-[10px] text-gray-500">البريد الإلكتروني</span>
+                                        <div id="wilaya-sec-email-container" class="font-bold mt-1 text-xs md:text-sm truncate"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center p-2 bg-gray-50 rounded border border-gray-100">
+                                    <span class="w-8 text-lg">📍</span>
+                                    <div><span class="block text-[10px] text-gray-500">المقر</span><span class="font-bold text-xs md:text-sm" id="wilaya-sec-address"></span></div>
                                 </div>
                             </div>
-                            
-                            <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
-                                <span class="w-8 text-lg md:text-xl">📧</span>
-                                <div class="flex-grow overflow-hidden">
-                                    <span class="block text-[10px] md:text-xs text-gray-500">البريد الإلكتروني</span>
-                                    <div id="wilaya-sec-email-container" class="font-bold mt-1 text-xs md:text-sm truncate"></div>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-center p-2 md:p-3 bg-gray-50 rounded border border-gray-100">
-                                <span class="w-8 text-lg md:text-xl">📍</span>
-                                <div><span class="block text-[10px] md:text-xs text-gray-500">المقر</span><span class="font-bold text-xs md:text-sm" id="wilaya-sec-address"></span></div>
-                            </div>
                         </div>
+                        
+                        <!-- صورة الأمين الولائي مكبرة جداً بجانب البيانات (كما طلبت في الصورة) -->
+                        <div class="w-full md:w-48 h-64 md:h-auto bg-gray-100 border-t md:border-t-0 md:border-r border-gray-200 flex-shrink-0">
+                            <img id="wilaya-sec-img" src="" onerror="this.src=defaultAvatar" alt="صورة الأمين الولائي" class="avatar-img">
+                        </div>
+                    </div>
 
-                        <!-- حاوية الولايات المستحدثة -->
+                    <div id="wilaya-data-additional" class="hidden">
                         <div id="new-wilayas-container" class="mt-4"></div>
-                        
-                        <!-- عرض البلديات -->
                         <div id="wilaya-communes-container" class="mt-4"></div>
                         
                         <button id="btn-show-region" class="mt-4 w-full py-2 md:py-3 bg-blue-50 border border-blue-200 hover:bg-blue-100 text-blue-800 font-bold text-sm md:text-base rounded transition flex items-center justify-center gap-2">
@@ -242,7 +280,6 @@
     </div>
 
     <script>
-        // الأيقونة الافتراضية تظهر إذا لم يجد التطبيق الصورة المرفوعة
         const defaultAvatar = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%239ca3af"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
 
         const nationalMembers = [
@@ -387,11 +424,11 @@
                 if(cleanPhone.length > 5) {
                     const whatsappNum = cleanPhone.startsWith('0') ? '213' + cleanPhone.substring(1) : cleanPhone;
                     html += `
-                        <div class="flex items-center gap-1 bg-white border border-gray-200 px-1 py-1 rounded shadow-sm text-xs md:text-sm">
-                            <span class="text-gray-800 dir-ltr">${p.trim()}</span>
-                            <div class="flex gap-1 ml-1 border-r pr-1">
-                                <a href="tel:${cleanPhone}" class="contact-link bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full w-5 h-5 flex items-center justify-center text-xs" title="اتصال">📞</a>
-                                <a href="https://wa.me/${whatsappNum}" target="_blank" class="contact-link bg-green-100 hover:bg-green-200 text-green-700 rounded-full w-5 h-5 flex items-center justify-center font-bold text-xs" title="واتساب">W</a>
+                        <div class="flex items-center gap-1 bg-gray-50 border border-gray-200 px-2 py-1 rounded-md shadow-sm text-xs md:text-sm">
+                            <span class="text-gray-800 dir-ltr font-semibold">${p.trim()}</span>
+                            <div class="flex gap-1 ml-2 border-r pr-2">
+                                <a href="tel:${cleanPhone}" class="contact-link bg-blue-100 hover:bg-blue-200 text-blue-700 rounded-full w-6 h-6 flex items-center justify-center text-xs" title="اتصال">📞</a>
+                                <a href="https://wa.me/${whatsappNum}" target="_blank" class="contact-link bg-green-100 hover:bg-green-200 text-green-700 rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs" title="واتساب">W</a>
                             </div>
                         </div>`;
                 }
@@ -402,7 +439,7 @@
 
         function generateEmailLink(email) {
             if(!email || email.trim() === "") return '';
-            return `<a href="mailto:${email.trim()}" class="contact-link text-blue-600 hover:underline bg-blue-50 px-2 py-1 rounded inline-block text-xs md:text-sm truncate w-full" title="${email.trim()}">${email.trim()}</a>`;
+            return `<a href="mailto:${email.trim()}" class="contact-link text-blue-600 hover:underline bg-blue-50 px-2 py-1 rounded-md inline-block text-xs md:text-sm truncate w-full" title="${email.trim()}">${email.trim()}</a>`;
         }
 
         document.getElementById('wilaya-search').addEventListener('input', e => {
@@ -475,19 +512,22 @@
             });
         }
 
+        // دالة عرض أعضاء المكتب الوطني بالشكل الجديد (الصورة مفصولة وبحجم كبير)
         function renderNationalMembers() {
             const grid = document.getElementById('national-members-grid');
             if(!grid) return;
             nationalMembers.forEach(m => {
                 grid.innerHTML += `
-                    <div class="border border-gray-100 rounded p-2 bg-white shadow-sm hover:shadow-md transition flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200 flex-shrink-0">
+                    <div class="member-card">
+                        <div class="member-photo-container">
                             <img src="images/${m.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
-                        <div>
-                            <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded block mb-1 w-max">${m.role}</span>
-                            <h4 class="font-bold text-gray-800 text-xs md:text-sm mb-1">${m.name}</h4>
-                            ${generatePhoneLinks(m.phone)}
+                        <div class="member-info-container">
+                            <span class="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded block mb-2 w-max">${m.role}</span>
+                            <h4 class="font-bold text-gray-800 text-sm md:text-base mb-2">${m.name}</h4>
+                            <div class="space-y-1">
+                                ${generatePhoneLinks(m.phone)}
+                            </div>
                         </div>
                     </div>`;
             });
@@ -498,22 +538,20 @@
             if(!grid) return;
             advisors.forEach(a => {
                 grid.innerHTML += `
-                    <div class="border-l-4 border-indigo-500 rounded-r-lg p-3 bg-white shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-3 hover:shadow-md transition">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-full bg-indigo-50 overflow-hidden border border-indigo-100 flex-shrink-0">
-                                <img src="images/${a.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
-                            </div>
-                            <div>
-                                <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-0.5 rounded block mb-1 w-max">${a.role}</span>
-                                <div class="flex items-center gap-2">
-                                    <h4 class="font-bold text-gray-800 text-sm md:text-base">${a.name}</h4>
-                                    <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${a.wilaya}</span>
-                                </div>
-                            </div>
+                    <div class="member-card border-l-4 border-indigo-500">
+                        <div class="member-photo-container">
+                            <img src="images/${a.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
-                        <div class="flex flex-col gap-1 w-full md:w-auto">
-                            ${generatePhoneLinks(a.phone)}
-                            ${a.email ? generateEmailLink(a.email) : ''}
+                        <div class="member-info-container">
+                            <span class="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 py-1 rounded block mb-2 w-max">${a.role}</span>
+                            <div class="flex items-center gap-2 mb-2">
+                                <h4 class="font-bold text-gray-800 text-sm md:text-base">${a.name}</h4>
+                                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">${a.wilaya}</span>
+                            </div>
+                            <div class="space-y-1">
+                                ${generatePhoneLinks(a.phone)}
+                                ${a.email ? generateEmailLink(a.email) : ''}
+                            </div>
                         </div>
                     </div>`;
             });
@@ -524,16 +562,16 @@
             if(!grid) return;
             elders.forEach(e => {
                 grid.innerHTML += `
-                    <div class="border border-amber-200 rounded p-3 bg-amber-50 shadow-sm hover:shadow-md transition flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-amber-100 overflow-hidden border border-amber-200 flex-shrink-0">
+                    <div class="member-card border-amber-200">
+                        <div class="member-photo-container bg-amber-50 border-amber-200">
                             <img src="images/${e.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
-                        <div class="flex-grow">
-                            <div class="flex items-center gap-2 mb-2 pb-2 border-b border-amber-200">
+                        <div class="member-info-container">
+                            <div class="flex items-center gap-2 mb-3 pb-2 border-b border-amber-100">
                                 <h4 class="font-bold text-amber-900 text-sm md:text-base">${e.name}</h4>
-                                <span class="text-[10px] bg-white text-amber-700 border border-amber-300 px-2 py-0.5 rounded-full">${e.wilaya}</span>
+                                <span class="text-[10px] bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full">${e.wilaya}</span>
                             </div>
-                            <div class="flex flex-col gap-1">
+                            <div class="space-y-1">
                                 ${generatePhoneLinks(e.phone)}
                                 ${e.email ? generateEmailLink(e.email) : ''}
                             </div>
@@ -584,17 +622,19 @@
             membersGrid.innerHTML = '';
             data.members.forEach(m => {
                 membersGrid.innerHTML += `
-                    <div class="bg-white border border-gray-200 rounded-lg p-3 shadow-sm flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-gray-50 overflow-hidden border border-gray-200 flex-shrink-0">
+                    <div class="member-card">
+                        <div class="member-photo-container">
                             <img src="images/${m.id}.jpg" onerror="this.src=defaultAvatar" class="avatar-img">
                         </div>
-                        <div class="flex-grow">
-                            <div class="flex justify-between items-start mb-1">
+                        <div class="member-info-container">
+                            <div class="flex justify-between items-start mb-2">
                                 <span class="font-bold text-gray-800 text-sm md:text-base">${m.name}</span>
-                                <span class="text-xs bg-green-50 text-green-700 border border-green-200 px-2 py-1 rounded-full">${m.wilaya}</span>
+                                <span class="text-[10px] bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded-full">${m.wilaya}</span>
                             </div>
-                            <div>${generatePhoneLinks(m.phone)}</div>
-                            ${m.email ? `<div class="mt-1">${generateEmailLink(m.email)}</div>` : ''}
+                            <div class="space-y-1">
+                                ${generatePhoneLinks(m.phone)}
+                                ${m.email ? generateEmailLink(m.email) : ''}
+                            </div>
                         </div>
                     </div>
                 `;
@@ -673,6 +713,7 @@
             if(w && w.sec && w.sec.trim() !== "") {
                 document.getElementById('wilaya-data-found').classList.remove('hidden');
                 document.getElementById('wilaya-no-data').classList.add('hidden');
+                document.getElementById('wilaya-data-additional').classList.remove('hidden');
                 
                 document.getElementById('wilaya-sec-img').src = `images/${wilayaId}.jpg`;
 
@@ -699,6 +740,7 @@
                 
             } else {
                 document.getElementById('wilaya-data-found').classList.add('hidden');
+                document.getElementById('wilaya-data-additional').classList.add('hidden');
                 document.getElementById('wilaya-no-data').classList.remove('hidden');
                 
                 renderNewWilayas(wilayaId, 'new-wilayas-container-nodata');
